@@ -31,7 +31,7 @@ const goalieSchema = new Schema({
     contact_info: {
         type: String,
     },
-    goalie_review: [goalie_reviewSchema],
+    review: [goalie_reviewSchema],
     fav_requestors: [{type: Schema.Types.ObjectId, ref: 'Requestor'}]
 },{
     timestamps: true
