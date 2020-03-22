@@ -5,7 +5,7 @@ module.exports = {
     show,
     create,
     update,
-    delete: deleteGame
+    delete: delete_game
 };
 
 //send all games as json response
@@ -68,7 +68,7 @@ function update(req, res) {
 };
 
 //delete a game
-function deleteGame(req, res) {
+function delete_game(req, res) {
     Game.findOneAndDelete(req.params.id)
     .populate('goalie', 'requestor')
     .exec((err, game) => {

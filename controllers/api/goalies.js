@@ -5,7 +5,7 @@ module.exports = {
     show,
     create,
     update,
-    delete: deleteGoalie
+    delete: delete_goalie
 };
 
 //send all goalies as json response
@@ -65,7 +65,7 @@ function update(req, res) {
 };
 
 //delete a goalie
-function deleteGoalie(req, res) {
+function delete_Goalie(req, res) {
     Game.findOneAndDelete(req.params.id)
     .populate('requestor')
     .exec((err, goalie) => {

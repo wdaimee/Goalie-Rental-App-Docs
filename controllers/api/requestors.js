@@ -5,7 +5,7 @@ module.exports = {
     show,
     create,
     update,
-    delete: deleteRequestor
+    delete: delete_requestor
 };
 
 //send all requestors as json response
@@ -64,7 +64,7 @@ function update(req, res) {
 };
 
 //delete a requestor
-function deleteRequestor(req, res) {
+function delete_requestor(req, res) {
     Requestor.findOneAndDelete(req.params.id)
     .populate('goalie')
     .exec((err, requestor) => {
