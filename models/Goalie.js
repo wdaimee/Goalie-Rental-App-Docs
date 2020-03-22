@@ -18,11 +18,11 @@ const goalieSchema = new Schema({
         type: String,
         required: true
     },
-    sport: {
+    sport: [{
         type: [String],
         enum: ['hockey', 'soccer', 'lacrosse'], 
         required: true
-    },
+    }],
     skill_level: {
         type: String,
         enum: ['A', 'B', 'C', 'D', 'Beginner'],
