@@ -14,7 +14,7 @@ const gameSchema = new Schema({
         'North York', 'Richmond Hill', 'Markham', 'Scarborough'],
         required: true
     },
-    arena: [{type: Schema.Types.ObjectId, ref: 'Arena'}],
+    arena: {type: Schema.Types.ObjectId, ref: 'Arena'},
     request_time: {
         type: String,
         required: true
@@ -28,8 +28,8 @@ const gameSchema = new Schema({
         required: true
     },
     Description: String,
-    requestor: [{type: Schema.Types.ObjectId, ref: 'Requestor'}],
-    goalie: [{type: Schema.Types.ObjectId, ref: 'Goalie'}]
+    requestor: {type: Schema.Types.ObjectId, ref: 'Requestor'},
+    goalie: {type: Schema.Types.ObjectId, ref: 'Goalie'}
 }, {
     timestamps: true
 });
