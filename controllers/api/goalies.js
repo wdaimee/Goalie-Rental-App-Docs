@@ -38,19 +38,17 @@ function show(req, res) {
 // create a new goalie
 function create(req, res) {
     const new_goalie = new Goalie({
+        name: req.body.name,
         sport: req.body.sport,
-        city: req.body.city,
-        arena: req.body.area,
-        request_date: req.body.request_date,
-        team_name: req.body.team_name,
-        description: req.body.description
+        skill_level: req.body.skill_level,
+        contact_info: req.body.contact_info
     });
-    new_game.save((err, game) => {
+    new_goalie.save((err, game) => {
         if (err) {
             console.log("create error: " + err)
         }
-        console.log("created game");
-        res.json(game);
+        console.log("created goalie");
+        res.json(goalie);
     });
 };
 
@@ -80,4 +78,4 @@ function deleteGoalie(req, res) {
     });
 };
 
-//add create/delete/update review (seperate controller/router maybe needed)
+
