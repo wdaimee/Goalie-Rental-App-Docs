@@ -12,11 +12,16 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 //api routers
+//router for game
 const gameRouter = require('./routes/api/games');
+//router for goalie
 const goalieRouter = require('./routes/api/goalies');
+//router for requestor
 const requestorRouter = require('./routes/api/requestors');
+//router for goalie review
 const goalie_reviewRouter = require('./routes/api/goalie_review');
-const requestor_reviewRouter = require('./routes/api/requestor_review')
+//router for requestor review
+const requestor_reviewRouter = require('./routes/api/requestor_review');
 
 var app = express();
 app.use(cors());
@@ -34,10 +39,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 //api routes
+//mount route for game
 app.use('/api/games', gameRouter);
+//mount route for goalie
 app.use('/api/goalies', goalieRouter);
+//mount route for goalie review
 app.use('/api/goalies', goalie_reviewRouter);
+//mount route for requestor 
 app.use('/api/requestors', requestorRouter);
+//mount route for requestor review
 app.use('/api/requestors', requestor_reviewRouter);
 
 
