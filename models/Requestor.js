@@ -24,7 +24,7 @@ const requestorSchema = new Schema({
         type: String,
         required: true
     },
-    requestor_review: [requestor_reviewSchema],
+    review: [requestor_reviewSchema],
     fav_goalies: [{type: Schema.Types.ObjectId, ref: 'Goalie'}]
 }, {
     timestamps: true
