@@ -1,6 +1,4 @@
 const Game = require('../../models/game');
-const Goalie = require('../../models/goalie');
-const Requestor = require('../../models/requestor');
 
 module.exports = {
     index,
