@@ -43,7 +43,7 @@ function create(req, res) {
         skill_level: req.body.skill_level,
         contact_info: req.body.contact_info
     });
-    new_goalie.save((err, game) => {
+    new_goalie.save((err, goalie) => {
         if (err) {
             console.log("create error: " + err)
         }
@@ -56,7 +56,7 @@ function create(req, res) {
 function update(req, res) {
     Goalie.findOneAndUpdate(req.params.id, req.body, {new: true})
     .populate('requestor')
-    .exec((err, game) => {
+    .exec((err, goalie) => {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
@@ -69,12 +69,12 @@ function update(req, res) {
 function deleteGoalie(req, res) {
     Game.findOneAndDelete(req.params.id)
     .populate('requestor')
-    .exec((err, game) => {
+    .exec((err, goalie) => {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
         }
-        res.json(game)
+        res.json(goalie)
     });
 };
 
