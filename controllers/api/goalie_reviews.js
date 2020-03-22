@@ -9,7 +9,7 @@ module.exports = {
 // create a new goalie review
 function create(req, res) {
     Goalie.findById(req.params.id, function(err, goalie) {
-        goalie.goalie_review.push(req.boy);
+        goalie.review.push(req.boy);
         goalie.save(function(err) {
             res.json(goalie);
         });
@@ -25,7 +25,7 @@ function update(req, res) {
 
 //delete a goalie review
 function delete_goalie_review(req, res) {
-    Game.review.findOneAndDelete(req.params.id , function(err, goalie) {
+    Goalie.review.findOneAndDelete(req.params.id , function(err, goalie) {
         res.json(goalie);
     });
 };
