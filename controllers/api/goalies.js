@@ -79,3 +79,5 @@ function deleteGoalie(req, res) {
         res.json(game)
     });
 };
+
+//add create/delete/update review (seperate controller/router maybe needed)

@@ -8,4 +8,5 @@ router.put('/:id', goaliesCtrl.update);
 router.get('/:id', goaliesCtrl.show);
 router.delete('/:id', goaliesCtrl.delete);
 
+
 module.exports = router;
