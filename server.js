@@ -13,8 +13,10 @@ var usersRouter = require('./routes/users');
 
 //api routers
 const gameRouter = require('./routes/api/games');
-// const goalieRouter = require('./routes/api/goalies');
-// const requestorRouter = require('./routes/api/requestors');
+const goalieRouter = require('./routes/api/goalies');
+const requestorRouter = require('./routes/api/requestors');
+const goalie_reviewRouter = require('./routes/api/goalie_review');
+const requestor_reviewRouter = require('./routes/api/requestor_review')
 
 var app = express();
 app.use(cors());
@@ -33,8 +35,11 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 //api routes
 app.use('/api/games', gameRouter);
-// app.use('/api/goalies', goalieRouter);
-// app.use('/api/requestors', requestorRouter);
+app.use('/api/goalies', goalieRouter);
+app.use('/api/goalies', goalie_reviewRouter);
+app.use('/api/requestors', requestorRouter);
+app.use('/api/requestors', requestor_reviewRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
