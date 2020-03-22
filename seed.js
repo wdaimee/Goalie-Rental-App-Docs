@@ -1,6 +1,6 @@
 // This file allows you to seed arena details in to the database
-
-const db = require('./models/Arena');
+require('./config/database');
+const Arena = require('./models/Arena')
 
 const arena_list = [
     {
@@ -305,9 +305,9 @@ const arena_list = [
     }
 ];
 
-db.Arena.deleteMany({}, (err, arenas) => {
+Arena.deleteMany({}, (err, arenas) => {
     console.log('removed all arenas');
-    db.Arena.create(arena_list, (err, arenas) => {
+    Arena.create(arena_list, (err, arenas) => {
         if (err) {
             console.log(err);
             return;

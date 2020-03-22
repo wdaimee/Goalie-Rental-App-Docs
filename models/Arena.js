@@ -18,4 +18,5 @@ const arenaSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model('Arena', arenaSchema);
+const Arena = mongoose.model('Arena', arenaSchema);
+module.exports = Arena;

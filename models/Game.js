@@ -23,13 +23,13 @@ const gameSchema = new Schema({
         type: Date,
         required: true
     },
-    team_name = {
+    team_name: {
         type: String,
         required: true
     },
     Description: String,
-    requestor = [{type: Schema.Types.ObjectId, ref: 'Requestor'}],
-    goalie = [{type: Schema.Types.ObjectId, ref: 'Goalie'}]
+    requestor: [{type: Schema.Types.ObjectId, ref: 'Requestor'}],
+    goalie: [{type: Schema.Types.ObjectId, ref: 'Goalie'}]
 }, {
     timestamps: true
 });
