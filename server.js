@@ -14,14 +14,13 @@ var usersRouter = require('./routes/users');
 //api routers
 //router for game
 const gameRouter = require('./routes/api/games');
-//router for goalie
-const goalieRouter = require('./routes/api/goalies');
-//router for requestor
-const requestorRouter = require('./routes/api/requestors');
+//router for user
+const userRouter = require('./routes/api/users');
+
 //router for goalie review
-const goalie_reviewRouter = require('./routes/api/goalie_review');
-//router for requestor review
-const requestor_reviewRouter = require('./routes/api/requestor_review');
+// const goalie_reviewRouter = require('./routes/api/goalie_review');
+// //router for requestor review
+// const requestor_reviewRouter = require('./routes/api/requestor_review');
 
 var app = express();
 app.use(cors());
@@ -41,14 +40,14 @@ app.use('/users', usersRouter);
 //api routes
 //mount route for game
 app.use('/api/games', gameRouter);
-//mount route for goalie
-app.use('/api/goalies', goalieRouter);
-//mount route for goalie review
-app.use('/api/goalies', goalie_reviewRouter);
-//mount route for requestor 
-app.use('/api/requestors', requestorRouter);
-//mount route for requestor review
-app.use('/api/requestors', requestor_reviewRouter);
+//mount router for users
+app.use('/api/users', userRouter);
+
+// //mount route for goalie review
+// app.use('/api/goalies', goalie_reviewRouter);
+
+// //mount route for requestor review
+// app.use('/api/requestors', requestor_reviewRouter);
 
 
 // catch 404 and forward to error handler
