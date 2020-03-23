@@ -9,7 +9,7 @@ module.exports = {
 // create a new goalie review
 function create(req, res) {
     Goalie.findById(req.params.id, function(err, goalie) {
-        goalie.review.push(req.boy);
+        goalie.review.push({content: req.body.content, rating: req.body.rating});
         goalie.save(function(err) {
             res.json(goalie);
         });
