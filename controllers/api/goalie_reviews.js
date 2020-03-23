@@ -20,7 +20,6 @@ function delete_goalie_review(req, res) {
     Goalie.findOne({'review._id': req.params.id}, function(err, goalie) {
         goalie.review.id(req.params.id).remove();
         goalie.save(function(err, goalie) {
-            console.log(goalie);
             res.json(goalie);
         });
     });
