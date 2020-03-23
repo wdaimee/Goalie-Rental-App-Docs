@@ -30,4 +30,5 @@ const requestorSchema = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Requestor', requestorSchema);
+const Requestor = mongoose.model('Requestor', requestorSchema);
+module.exports = Requestor;

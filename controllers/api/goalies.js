@@ -65,8 +65,8 @@ function update(req, res) {
 };
 
 //delete a goalie
-function delete_Goalie(req, res) {
-    Game.findOneAndDelete(req.params.id)
+function delete_goalie(req, res) {
+    Goalie.findOneAndDelete(req.params.id)
     .populate('requestor')
     .exec((err, goalie) => {
         if (err) {

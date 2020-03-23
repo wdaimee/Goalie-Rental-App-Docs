@@ -1,4 +1,4 @@
-const Requestor = require('../../models/requestor');
+const Requestor = require('../../models/Requestor');
 
 module.exports = {
     index,
@@ -36,19 +36,10 @@ function show(req, res) {
 
 // create a new requestor
 function create(req, res) {
-    const new_requestor = new Requestor({
-        name: req.body.name,
-        age: req.body.age,
-        contact_info: req.body.contact_info
-    });
-    new_requestor.save((err, requestor) => {
-        if (err) {
-            console.log("create error: " + err)
-        }
-        console.log("created requestor");
+    Requestor.create(req.body, function(err, requestor) {
         res.json(requestor);
     });
-};
+}
 
 //update a requestor
 function update(req, res) {

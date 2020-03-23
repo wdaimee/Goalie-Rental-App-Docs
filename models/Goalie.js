@@ -37,4 +37,5 @@ const goalieSchema = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Goalie', goalieSchema);
+const Game = mongoose.model('Goalie', goalieSchema);
+module.exports = Game;
