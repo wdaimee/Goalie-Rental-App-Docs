@@ -41,7 +41,7 @@ function create(req, res) {
         sport: req.body.sport,
         skill_level: req.body.skill_level,
         city: req.body.city,
-        arena: req.body.area,
+        arena: req.body.arena,
         request_date: req.body.request_date,
         team_name: req.body.team_name,
         description: req.body.description
