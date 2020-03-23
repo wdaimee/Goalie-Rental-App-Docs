@@ -39,6 +39,7 @@ function show(req, res) {
 function create(req, res) {
     const new_game = new Game({
         sport: req.body.sport,
+        skill_level: req.body.skill_level,
         city: req.body.city,
         arena: req.body.area,
         request_date: req.body.request_date,

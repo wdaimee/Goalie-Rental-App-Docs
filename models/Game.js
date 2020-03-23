@@ -8,6 +8,11 @@ const gameSchema = new Schema({
         default: 'hockey',
         required: true
     },
+    skill_level: {
+        type: String,
+        enum: ['A', 'B', 'C', 'D', 'Beginner'],
+        required: true
+    },
     city: {
         type: String,
         enum: ['Toronto', 'Mississauga', 'Brampton', 
