@@ -50,7 +50,7 @@ function create(req, res) {
 
 //delete a user review
 function delete_review(req, res) {
-    Review.findOneAndDelete(req.params.id).populdate('review_by', 'user_reviewed')
+    Review.findOneAndDelete(req.params.id).populate('review_by', 'user_reviewed')
     .exec((err, review) => {
         if (err) {
             console.log("error: " + err);
