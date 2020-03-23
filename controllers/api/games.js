@@ -1,4 +1,5 @@
 const Game = require('../../models/game');
+const Arena = require('../../models/Arena');
 
 module.exports = {
     index,
@@ -41,10 +42,13 @@ function create(req, res) {
         sport: req.body.sport,
         skill_level: req.body.skill_level,
         city: req.body.city,
-        arena: req.body.arena,
+        request_time: req.body.request_time,
         request_date: req.body.request_date,
         team_name: req.body.team_name,
         description: req.body.description
+    });
+    Arena.findOne({name: req.body.arena}, (err, arena) => {
+        new_game.arena = arena;
     });
     new_game.save((err, game) => {
         if (err) {
