@@ -13,7 +13,9 @@ function index(req, res) {
    Review.find({}).populate({
        path: 'user_reviewed',
        match: {_id:req.params.id}
-   }).exec((err, reviews) => {
+   })
+   .populate('review_by')
+   .exec((err, reviews) => {
        if (err) {
            console.log(err);
        }
@@ -27,16 +29,9 @@ function create(req, res) {
         content: req.body.content,
         rating: req.body.rating
     }); 
-    User.findOne({_id: req.body.review_by}, (err, user) => {
-        console.log(user);
-        new_review.review_by = user;
-    });
-    User.findOne({_id: req.body.user_reviewed}, (err, user) => {
-        console.log(user);
-        new_review.user_reviewed = user;
-    });
+    new_review.review_by = req.body.review_by;
+    new_review.user_reviewed = req.body.user_reviewed;
     new_review.save((err, review) => {
-        res.json(review);
         Review.findOne(review).populate('review_by', 'user_reviewed')
         .exec((err, review) => {
             if (err) {

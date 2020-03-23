@@ -1,5 +1,7 @@
-const Game = require('../../models/game');
+const Game = require('../../models/Game');
 const Arena = require('../../models/Arena');
+const User = require('../../models/User');
+
 
 module.exports = {
     index,
@@ -9,10 +11,12 @@ module.exports = {
     delete: delete_game
 };
 
-//send list of all games submitted by
+//send list of all games 
 function index(req, res) {
     Game.find({})
-    .populate('goalie', 'requestor')
+    .populate('arena')
+    .populate('goalie')
+    .populate('requestor')
     .exec((err, games) => {
         if (err) {
             console.log("index error: " + err);
@@ -25,7 +29,9 @@ function index(req, res) {
 //get one game
 function show(req, res) {
     Game.findById(req.params.id)
-    .populate('goalie', 'requestor')
+    .populate('arena')
+    .populate('goalie')
+    .populate('requestor')
     .exec((err, game) => {
         if (err) {
             console.log('error: ' + err);
@@ -48,21 +54,35 @@ function create(req, res) {
         description: req.body.description
     });
     Arena.findOne({name: req.body.arena}, (err, arena) => {
-        new_game.arena = arena;
+        new_game.arena = arena._id;
     });
+    new_game.requestor = req.body.requestor;
+    new_game.goalie = req.body.goalie;
+    console.log(new_game);
     new_game.save((err, game) => {
         if (err) {
             console.log("create error: " + err)
         }
+        console.log(game);
         console.log("created game");
-        res.json(game);
+        Game.findOne(game)
+        .populate('arena')
+        .populate('requestor')
+        .populate('goalie')
+        .exec((err, game) => {
+            console.log(game);
+            if (err) {
+                console.log("error:" + err);
+                res.sendStatus(500);
+            }
+            res.json(game);
+        });
     });
 };
 
 //update a game
 function update(req, res) {
     Game.findOneAndUpdate(req.params.id, req.body, {new: true})
-    .populate('goalie', 'requestor')
     .exec((err, game) => {
         if (err) {
             console.log("error: " + err);
@@ -75,7 +95,6 @@ function update(req, res) {
 //delete a game
 function delete_game(req, res) {
     Game.findOneAndDelete(req.params.id)
-    .populate('goalie', 'requestor')
     .exec((err, game) => {
         if (err) {
             console.log("error: " + err);
