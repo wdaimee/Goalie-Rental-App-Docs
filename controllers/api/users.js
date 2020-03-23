@@ -37,7 +37,7 @@ function create(req, res) {
     });
 }
 
-//update a requestor
+//update a user
 function update(req, res) {
     User.findOneAndUpdate(req.params.id, req.body, {new: true}, (err, user) => {
         if (err) {
@@ -48,7 +48,7 @@ function update(req, res) {
     });
 };
 
-//delete a requestor
+//delete a user
 function delete_user(req, res) {
     User.findOneAndDelete(req.params.id, (err, user) => {
         if (err) {

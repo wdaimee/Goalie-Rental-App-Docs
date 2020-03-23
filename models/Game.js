@@ -32,9 +32,9 @@ const gameSchema = new Schema({
         type: String,
         required: true
     },
-    Description: String,
-    requestor: {type: Schema.Types.ObjectId, ref: 'Requestor'},
-    goalie: {type: Schema.Types.ObjectId, ref: 'Goalie'}
+    description: String,
+    requestor: {type: Schema.Types.ObjectId, ref: 'User'},
+    goalie: {type: Schema.Types.ObjectId, ref: 'User'}
 }, {
     timestamps: true
 });

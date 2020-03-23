@@ -9,7 +9,7 @@ module.exports = {
     delete: delete_game
 };
 
-//send all games as json response
+//send list of all games submitted by
 function index(req, res) {
     Game.find({})
     .populate('goalie', 'requestor')
