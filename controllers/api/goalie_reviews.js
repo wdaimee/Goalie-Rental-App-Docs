@@ -2,7 +2,6 @@ const Goalie = require('../../models/goalie');
 
 module.exports = {
     create,
-    update,
     delete: delete_goalie_review
 };
 
@@ -16,16 +15,13 @@ function create(req, res) {
     });
 };
 
-//update a goalie review
-function update(req, res) {
-    Goalie.review.findOneAndUpdate(req.params.id, req.body, {new: true}, function(err, goalie) {
-        res.json(goalie);
-    }); 
-};
-
 //delete a goalie review
 function delete_goalie_review(req, res) {
-    Goalie.review.findOneAndDelete(req.params.id , function(err, goalie) {
-        res.json(goalie);
+    Goalie.findOne({'review._id': req.params.id}, function(err, goalie) {
+        goalie.review.id(req.params.id).remove();
+        goalie.save(function(err, goalie) {
+            console.log(goalie);
+            res.json(goalie);
+        });
     });
 };

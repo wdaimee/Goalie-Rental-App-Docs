@@ -2,7 +2,6 @@ const Requestor = require('../../models/Requestor');
 
 module.exports = {
     create,
-    update,
     delete: delete_requestor_review
 };
 
@@ -14,13 +13,6 @@ function create(req, res) {
             res.json(requstor);
         });
     });
-};
-
-//update a requestor review
-function update(req, res) {
-    Requestor.review.findOneAndUpdate(req.params.id, req.body, {new: true}, function(err, requestor) {
-        res.json(requestor);
-    }); 
 };
 
 //delete a goalie review
