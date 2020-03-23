@@ -16,11 +16,9 @@ var usersRouter = require('./routes/users');
 const gameRouter = require('./routes/api/games');
 //router for user
 const userRouter = require('./routes/api/users');
+//router for reviews
+const reviewRouter = require('./routes/api/reviews');
 
-//router for goalie review
-// const goalie_reviewRouter = require('./routes/api/goalie_review');
-// //router for requestor review
-// const requestor_reviewRouter = require('./routes/api/requestor_review');
 
 var app = express();
 app.use(cors());
@@ -42,12 +40,10 @@ app.use('/users', usersRouter);
 app.use('/api/games', gameRouter);
 //mount router for users
 app.use('/api/users', userRouter);
+// mount route for user review
+app.use('/api/users', reviewRouter);
 
-// //mount route for goalie review
-// app.use('/api/goalies', goalie_reviewRouter);
 
-// //mount route for requestor review
-// app.use('/api/requestors', requestor_reviewRouter);
 
 
 // catch 404 and forward to error handler
