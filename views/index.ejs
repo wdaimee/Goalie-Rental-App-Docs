@@ -9,8 +9,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-  <link href="../public/stylesheets/style.css" rel="stylesheets">
-  <script src="../public/javascripts/script.js"></script>
+  <link href="/stylesheets/style.css" rel="stylesheets">
+  <script defer src="/javascripts/script.js"></script>
 </head>
 <body>
   <!-- Navigation -->
@@ -65,15 +65,24 @@
   <div class="container-fluid padding p-3">
     <div class="col-12">
       <h2 class="display-5">Arena</h2>
+      <div class="container-fluid padding p-3">
+        <p>Get - How To Make an API Request to Get A List of All Arenas</p>
+        <p>Add An Arena - How To Make an API Request to Add an Arena</p>
+        <p>Show An Arena - How To Make an API Request to Show a Single Arena</p>
+        <p>Delete An Arena - How to Make an API Request to Delete an Arena</p>
+      </div>
       <div class="container-fluid col-12">
         <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-index'>Get</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-post'>Create an Arena</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-show'>Show an Arena</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-post'>Add An Arena</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-show'>Show An Arena</button>
         <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-arena-delete'>Delete an Arena</button>
+        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-arena-hide'>Hide</button>
       </div>
       <div class="container-fluid padding" id='arena-display'>
         <div id='arena-show'>
           <h3 class="display-5">Arena List</h3>
+          <p class="lead">To get a list of all arenas supported by this API, use the following url:</p>
+          <p>https://goalie-rental-app.herokuapp.com/api/</p>
           <section></section>
         </div>
         <div id='arena-create'>
@@ -87,16 +96,15 @@
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Address</span>
+                <span class="input-group-text" id="inputGroup-sizing-default" placeholder="Toronto or Mississauga">City</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
-            <div>
-              <label for="city">Choose a city:</label>
-              <select id="city">
-                <option value="Toronto">Toronto</option>
-                <option value="Mississauga">Mississauga</option>
-              </select>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Address</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
             <button type="button" class="btn btn-success"id="btn-add-arena">Add Arena</button>
           </section>
