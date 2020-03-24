@@ -4,6 +4,7 @@ const User = require('../../models/User');
 
 module.exports = {
     index,
+    all_reviews,
     create,
     delete: delete_review
 };
@@ -17,10 +18,18 @@ function index(req, res) {
    .populate('review_by')
    .exec((err, reviews) => {
        if (err) {
-           console.log(err);
+           console.log("error: " + err);
+           res.sendStatus(500);
        }
        res.json(reviews);
    });
+};
+
+//get all reviews (need to complete)
+function all_reviews(req, res) {
+    Review.find({}, function(err, reviews) {
+        res.json(reviews);
+    });
 };
 
 // create a new user review
@@ -32,7 +41,9 @@ function create(req, res) {
     new_review.review_by = req.body.review_by;
     new_review.user_reviewed = req.body.user_reviewed;
     new_review.save((err, review) => {
-        Review.findOne(review).populate('review_by', 'user_reviewed')
+        Review.findOne(review)
+        .populate('review_by') 
+        .populate('user_reviewed')
         .exec((err, review) => {
             if (err) {
                 console.log("error: " + err);
@@ -45,8 +56,11 @@ function create(req, res) {
 
 //delete a user review
 function delete_review(req, res) {
-    Review.findOneAndDelete(req.params.id).populate('review_by', 'user_reviewed')
+    Review.findOneAndDelete(req.params.id)
+    .populate('review_by')
+    .populate('user_reviewed')
     .exec((err, review) => {
+        console.log(review);
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);

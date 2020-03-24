@@ -11,7 +11,7 @@ module.exports = {
     delete: delete_game
 };
 
-//send list of all games 
+//send list of all games (completed)
 function index(req, res) {
     Game.find({})
     .populate('arena')
@@ -26,7 +26,7 @@ function index(req, res) {
     });
 };
 
-//get one game
+//get one game (completed)
 function show(req, res) {
     Game.findById(req.params.id)
     .populate('arena')
@@ -41,8 +41,7 @@ function show(req, res) {
     });
 };
 
-//create a new game
-//need to complete adding requestor and goalie
+//create a new game (completed)
 function create(req, res) {
     const new_game = new Game({
         sport: req.body.sport,
@@ -55,24 +54,45 @@ function create(req, res) {
     });
     Arena.findOne({name: req.body.arena}, (err, arena) => {
         new_game.arena = arena._id;
+        new_game.save((err, game) => {
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            Game.findOne(game)
+            .populate('arena')
+            .populate('goalie')
+            .populate('requestor')
+            .exec((err, game) => {
+                if (err) {
+                    console.log("error: " + err);
+                    res.sendStatus(500);
+                }
+                res.json(game);
+            });
+        });
     });
     new_game.requestor = req.body.requestor;
     new_game.goalie = req.body.goalie;
     console.log(new_game);
-    new_game.save((err, game) => {
+};
+
+//update a game (completed)
+function update(req, res) {
+    Game.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    .exec((err, game) => {
         if (err) {
-            console.log("create error: " + err)
+            console.log("error: " + err);
+            res.sendStatus(500);
         }
         console.log(game);
-        console.log("created game");
         Game.findOne(game)
         .populate('arena')
-        .populate('requestor')
         .populate('goalie')
+        .populate('requestor')
         .exec((err, game) => {
-            console.log(game);
             if (err) {
-                console.log("error:" + err);
+                console.log('error: ' + err);
                 res.sendStatus(500);
             }
             res.json(game);
@@ -80,26 +100,17 @@ function create(req, res) {
     });
 };
 
-//update a game
-function update(req, res) {
-    Game.findOneAndUpdate(req.params.id, req.body, {new: true})
+//delete a game (completed)
+function delete_game(req, res) {
+    Game.findByIdAndDelete(req.params.id)
+    .populate('arena')
+    .populate('goalie')
+    .populate('requestor')
     .exec((err, game) => {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
         }
         res.json(game);
-    });
-};
-
-//delete a game
-function delete_game(req, res) {
-    Game.findOneAndDelete(req.params.id)
-    .exec((err, game) => {
-        if (err) {
-            console.log("error: " + err);
-            res.sendStatus(500);
-        }
-        res.json(game)
     });
 };
