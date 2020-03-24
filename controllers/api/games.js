@@ -1,6 +1,5 @@
 const Game = require('../../models/Game');
 const Arena = require('../../models/Arena');
-const User = require('../../models/User');
 
 
 module.exports = {
