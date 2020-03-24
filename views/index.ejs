@@ -1,11 +1,108 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <link href="../public/stylesheets/style.css" rel="stylesheets">
+  <script src="../public/javascripts/script.js"></script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-md navbar-dark bgsticky-top" style="background-color: black">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/index">
+        gUber Docs
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Arena</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"">Game</a>
+          </li>
+      </div>
+    </div>
+  </nav>
+  <!--- Introduction Section -->
+  <div class="intro container-fluid padding p-3">
+    <div class="row welcome text-center">
+      <div class="col-12">
+        <h1 class="display-5">Goalie App API Docs</h1>
+        <hr>
+        <div class="col-12">
+          <p class="lead">Welcome to the Docs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--- Explanation of docs -->
+  <div class="container-fluid padding col-12">
+    <div class="row padding px-4">
+      <p>This is the backend API documentation for gUber goalie rental app. The documentation has three sections available that explain the CRUD functionalities.</p>
+      <div>
+        <ul>
+          <li><a href="#">Arena</a></li>
+          <li><a href="#">User</a></li>
+          <li><a href="#">Game</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Section for Arena -->
+  <div class="container-fluid padding p-3">
+    <div class="col-12">
+      <h2 class="display-5">Arena</h2>
+      <div class="container-fluid col-12">
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-index'>Get</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-post'>Create an Arena</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-show'>Show an Arena</button>
+        <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-arena-delete'>Delete an Arena</button>
+      </div>
+      <div class="container-fluid padding" id='arena-display'>
+        <div id='arena-show'>
+          <h3 class="display-5">Arena List</h3>
+          <section></section>
+        </div>
+        <div id='arena-create'>
+          <h3 class="display-5">Add an Arena</h3>
+          <section>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Address</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div>
+              <label for="city">Choose a city:</label>
+              <select id="city">
+                <option value="Toronto">Toronto</option>
+                <option value="Mississauga">Mississauga</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-success"id="btn-add-arena">Add Arena</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
