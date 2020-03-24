@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const gamesCtrl = require('../../controllers/api/games');
 
-//get a list of all games requested by a user (history)
+//get a list of all games requested by a user if req.query.requestor is true 
+// or get a list of all games played by a goalie if req.query.goalie is true(history)
 router.get('/', gamesCtrl.index);
 
 //get a list of active requests for a requestor

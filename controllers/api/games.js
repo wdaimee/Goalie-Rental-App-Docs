@@ -16,19 +16,36 @@ module.exports = {
 };
 
 //send a list of all games requested by a user, query for now(history) - futher testing required
+//send a list of all games a goalie has played if req.query.goalie exists
 function index(req, res){
-    Game.find({requestor: req.query.requestor})
-    .populate('requestor')
-    .populate('arena')
-    .populate('goalie')
-    .exec((err, games) => {
-        console.log(games);
-        if (err) {
-            console.log("error: " + err);
-            res.sendStatus(500);
-        }
-        res.json(games);
-    });
+    if(req.query.requestor) {
+        Game.find({requestor: req.query.requestor})
+        .populate('requestor')
+        .populate('arena')
+        .populate('goalie')
+        .exec((err, games) => {
+            console.log(games);
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            res.json(games);
+        });
+    }
+    else if(req.query.goalie) {
+        Game.find({goalie: req.query.goalie})
+        .populate('requestor')
+        .populate('arena')
+        .populate('goalie')
+        .exec((err, games) => {
+            console.log(games);
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            res.json(games);
+        });
+    }
 };
 
 //see a list of active requests for the requestor - further testing required
@@ -61,7 +78,6 @@ function all_active(req, res) {
         res.json(games);
     });
 }
-
 
 //function to add a goalie to the game
 function add_goalie(req, res) {
