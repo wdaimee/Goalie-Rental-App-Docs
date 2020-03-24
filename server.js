@@ -18,6 +18,8 @@ const gameRouter = require('./routes/api/games');
 const userRouter = require('./routes/api/users');
 //router for reviews
 const reviewRouter = require('./routes/api/reviews');
+//router for arenas
+const arenaRouter = require('./routes/api/arenas');
 
 
 var app = express();
@@ -42,9 +44,8 @@ app.use('/api/games', gameRouter);
 app.use('/api/users', userRouter);
 // mount route for user review
 app.use('/api/users', reviewRouter);
-
-
-
+//mount router for arenas
+app.use('/api/arenas', arenaRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
