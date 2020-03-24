@@ -1,4 +1,5 @@
 // This file allows you to seed arena details in to the database
+require('dotenv').config();
 require('./config/database');
 const Arena = require('./models/Arena')
 
