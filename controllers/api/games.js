@@ -49,8 +49,7 @@ function index(req, res){
 
 //see a list of active requests for the requestor - further testing required
 function active(req, res) {
-    Game.find({goalie: null}).find({request_date: {$gt: new Date()}})
-    .find({requestor: req.query.requestor})
+    Game.find({goalie: null, request_date: {$gt: new Date()}, requestor: req.query.requestor})
     .populate('arena')
     .populate('goalie')
     .populate('requestor')
@@ -65,7 +64,7 @@ function active(req, res) {
 
 //function to view all active games available - further testing required
 function all_active(req, res) {
-    Game.find({goalie: null}).find({request_date: {$gt: new Date()}})
+    Game.find({goalie: null, request_date: {$gt: new Date()}})
     .populate('arena')
     .populate('goalie')
     .populate('requestor')
