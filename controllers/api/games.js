@@ -5,14 +5,71 @@ const User = require('../../models/User');
 
 module.exports = {
     index,
+    all_games,
+    add_goalie,
+    active,
+    all_active,
     show,
     create,
     update,
     delete: delete_game
 };
 
+//send a list of all games requested by a user, query for now(history) - futher testing required
+function index(req, res){
+    Game.find({requestor: req.query.requestor})
+    .populate('requestor')
+    .populate('arena')
+    .populate('goalie')
+    .exec((err, games) => {
+        console.log(games);
+        if (err) {
+            console.log("error: " + err);
+            res.sendStatus(500);
+        }
+        res.json(games);
+    });
+};
+
+//see a list of active requests for the requestor - further testing required
+function active(req, res) {
+    Game.find({goalie: null}).find({request_date: {$gt: new Date()}})
+    .find({requestor: req.query.requestor})
+    .populate('arena')
+    .populate('goalie')
+    .populate('requestor')
+    .exec((err, games) => {
+        if (err) {
+            console.log("index error: " + err);
+            res.sendStatus(500);
+        }
+        res.json(games);
+    });
+}
+
+//function to view all active games available - further testing required
+function all_active(req, res) {
+    Game.find({goalie: null}).find({request_date: {$gt: new Date()}})
+    .populate('arena')
+    .populate('goalie')
+    .populate('requestor')
+    .exec((err, games) => {
+        if (err) {
+            console.log("index error: " + err);
+            res.sendStatus(500);
+        }
+        res.json(games);
+    });
+}
+
+
+//function to add a goalie to the game
+function add_goalie(req, res) {
+
+}
+
 //send list of all games (completed)
-function index(req, res) {
+function all_games(req, res) {
     Game.find({})
     .populate('arena')
     .populate('goalie')
