@@ -77,12 +77,36 @@ function all_active(req, res) {
         }
         res.json(games);
     });
-}
+};
 
 //function to add a goalie to the game
 function add_goalie(req, res) {
-
-}
+    Game.findById(req.params.id, function(err, game) {
+        console.log(game);
+        if (err) {
+            console.log("error: " + err);
+            res.sendStatus(500);
+        }
+        game.goalie = req.query.goalie;
+        game.save((err, game) => {
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            Game.findOne(game)
+            .populate('arena')
+            .populate('requestor')
+            .populate('goalie')
+            .exec((err, game) => {
+                if (err) {
+                    console.log("error: " + err);
+                    res.sendStatus(500);
+                }
+                res.json(game);
+            });
+        });
+    });
+};
 
 //send list of all games (completed)
 function all_games(req, res) {
