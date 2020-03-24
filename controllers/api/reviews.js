@@ -28,6 +28,10 @@ function index(req, res) {
 //get all reviews (need to complete)
 function all_reviews(req, res) {
     Review.find({}, function(err, reviews) {
+        if (err) {
+            console.log("error: " + err);
+            res.sendStatus(500);
+        }
         res.json(reviews);
     });
 };
