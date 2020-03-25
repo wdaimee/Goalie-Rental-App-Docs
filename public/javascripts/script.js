@@ -1,5 +1,5 @@
 //base url to heroku api
-const BASE_URL = "http://localhost:3000/api/"
+const BASE_URL = 'http://localhost:3000/api/';
 
 /*-- Below Code for Arena Section --*/
 /*-- Constants --*/
@@ -16,7 +16,7 @@ const arenaCreateViewEl = document.getElementById('arena-create');
 const arenaEditViewEl = document.getElementById('arena-edit');
 const arenaDeleteViewEl = document.getElementById('arena-delete');
 //cached elements for sections that display JSON
-const arenaListContainerIndexEl = document.querySelector('#arena-show section');
+const arenaListContainerIndexEl = document.querySelector('#arena-show pre');
 const arenaListContainerCreateEl = document.getElementById('sec-arena-create');
 const arenaListContainerShowEl = document.getElementById('sec-arena-show');
 const arenaListContainerEditEl = document.getElementById('sec-arena-edit');
@@ -198,7 +198,7 @@ const userCreateViewEl = document.getElementById('user-create');
 const userEditViewEl = document.getElementById('user-edit');
 const userDeleteViewEl = document.getElementById('user-delete');
 //cached elements for sections that display JSON
-const userListContainerIndexEl = document.querySelector('#user-show section');
+const userListContainerIndexEl = document.querySelector('#user-show pre');
 const userListContainerCreateEl = document.getElementById('sec-user-create');
 const userListContainerShowEl = document.getElementById('sec-user-show');
 const userListContainerEditEl = document.getElementById('sec-user-edit');
