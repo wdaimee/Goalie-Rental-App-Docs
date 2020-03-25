@@ -1,22 +1,28 @@
 //base url to heroku api
-const BASE_URL = "https://goalie-rental-app.herokuapp.com/api/"
+const BASE_URL = "http://localhost:3000/api/"
 
 /*-- Below Code for Arena Section --*/
 /*-- Constants --*/
 
 
 /*-- State Variables --*/
-let arenaView, arenaShow, arenas;
+let arenaView, arenaShow, arenaE, arenas;
 
 /*-- Cached Elements --*/
+//cached elements for get/create/show/put/delete sections
 const arenaIndexViewEl = document.getElementById('arena-show');
 const areanShowViewEl = document.getElementById('arena-show-single');
 const arenaCreateViewEl = document.getElementById('arena-create');
+const areanEditViewEl = document.getElementById('arena-edit');
+//cached elements for sections that display JSON
 const arenaListContainerIndexEl = document.querySelector('#arena-show section');
 const arenaListContainerCreateEl = document.getElementById('sec-arena-create');
 const arenaListContainerShowEl = document.getElementById('sec-arena-show');
+const arenaListContainerEditEl = document.getElementById('sec-arena-edit');
+//cached elements for input elements for adding/editing/querying/etc.
 const arenaCreateInputEls = document.querySelectorAll('#arena-create input')
 const arenaShowInputEl = document.querySelectorAll('#arena-show-single input');
+const arenaEditInputEl = document.querySelectorAll('#arena-edit input');
 
 
 /*-- Event Listeners --*/
@@ -29,14 +35,14 @@ document.getElementById('btn-arena-hide')
 document.getElementById('btn-arena-index')
 .addEventListener('click', arenaGetAll);
 
-//when add an arena button is pressed
+//when add an arena button is pressed to show the CREATE form
 document.getElementById('btn-arena-post')
 .addEventListener('click', function() {
     arenaView = 'create';
     arenaRender();
 });
 
-//when add arena button is pressed
+//when add arena button is pressed within the CREATE section
 document.getElementById('btn-add-arena')
 .addEventListener('click', addArena);
 
@@ -50,6 +56,17 @@ document.getElementById('btn-arena-show')
 //when the get arean button inside the show view is pressed
 document.getElementById('btn-get-arena')
 .addEventListener('click', arenaGetOne);
+
+//when the PUT button is pressed to show the EDIT form
+document.getElementById('btn-arena-edit')
+.addEventListener('click', function() {
+    arenaView = 'edit';
+    arenaRender();
+});
+
+//when the edit arena button is pressed within the PUT section
+document.getElementById('btn-edit-arena')
+.addEventListener('click', arenaEdit);
 
 /*-- Functions --*/
 
@@ -87,6 +104,7 @@ async function addArena() {
     }
 }
 
+//async function for getting one arena
 async function arenaGetOne() {
     if(arenaShowInputEl[0].value) {
         arenaShow = await fetch(BASE_URL + 'arenas/' + arenaShowInputEl[0].value)
@@ -98,6 +116,30 @@ async function arenaGetOne() {
     arenaShowInputEl[0].value = '';
 }
 
+//async function for editing an arena
+async function arenaEdit() {
+    if(arenaEditInputEl[0].value) {
+        let arena = {};
+        if(arenaEditInputEl[1].value) {
+            arena.name = arenaEditInputEl[1].value;
+        }
+        if(arenaEditInputEl[2].value) {
+            arena.city = arenaEditInputEl[2].value;
+        }
+        if(arenaEditInputEl[3].value) {
+            arena.address = arenaEditInputEl[3].value;
+        }
+        arenaE = await fetch(BASE_URL + 'arenas/' + arenaEditInputEl[0].value, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(arena)
+        }).then(res => res.json())
+    }
+    let html = JSON.stringify(arenaE);
+    arenaListContainerEditEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    arenaEditInputEl[0].value = arenaEditInputEl[1].value = arenaEditInputEl[2].value = arenaEditInputEl[3].value = '';
+}
+
 //render function for arena section
 function arenaRender() {
     arenaIndexViewEl.style.display = 
@@ -106,10 +148,10 @@ function arenaRender() {
         arenaView === 'create' ? 'block' : 'none';
     areanShowViewEl.style.display = 
         arenaView === 'show' ? 'block' : 'none';
+    areanEditViewEl.style.display =
+        arenaView === 'edit' ? 'block' : 'none';
     if (arenaView === 'index') {
         let html = JSON.stringify(arenas);
-        // let html = arenas.reduce((html, arena) => html + 
-        // `<div>${arena}</div>`, '');
         arenaListContainerIndexEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
     }
 }
