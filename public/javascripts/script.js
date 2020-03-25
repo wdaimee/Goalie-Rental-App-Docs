@@ -1,13 +1,14 @@
-/*-- Constants --*/
 //base url to heroku api
 const BASE_URL = "https://goalie-rental-app.herokuapp.com/api/"
 
+/*-- Below Code for Arena Section --*/
+/*-- Constants --*/
+
+
 /*-- State Variables --*/
-/*-- for arena --*/
 let arenaView;
 
 /*-- Cached Elements --*/
-/*-- for arena --*/
 const arenaIndexViewEl = document.getElementById('arena-show');
 const arenaCreateViewEl = document.getElementById('arena-create');
 const arenaListContainerIndexEl = document.querySelector('#arena-show section');
@@ -15,12 +16,8 @@ const arenaListContainerCreateEl = document.getElementById('sec-arena-create');
 const arenaCreateInputEls = document.querySelectorAll('#arena-create input')
 
 
-/*-- for user --*/
-
-/*-- for game --*/
-
 /*-- Event Listeners --*/
-/*-- for arena --*/
+
 //when hide button is pressed
 document.getElementById('btn-arena-hide')
 .addEventListener('click', arenaInit);
@@ -41,15 +38,16 @@ document.getElementById('btn-add-arena')
 .addEventListener('click', addArena);
 
 /*-- Functions --*/
-/*-- for arena --*/
+
 arenaInit();
 
+//initial view of arena section
 async function arenaInit() {
     arenaView = 'hide';
     arenaRender();
 }
 
-
+//async function to get a list of arenas 
 async function arenaGetAll() {
     arenaView = 'index';
     arenas = await fetch(BASE_URL + 'arenas')
@@ -58,6 +56,7 @@ async function arenaGetAll() {
     arenaRender();
 }
 
+//async function for adding an arena
 async function addArena() {
     if (arenaCreateInputEls[0].value) {
         let newArena = await fetch(BASE_URL + 'arenas', {
@@ -75,6 +74,7 @@ async function addArena() {
     }
 }
 
+//render function for arena section
 function arenaRender() {
     arenaIndexViewEl.style.display = 
         arenaView === 'index' ? 'block' : 'none';
