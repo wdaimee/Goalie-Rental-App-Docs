@@ -10,7 +10,8 @@ let arenaView;
 /*-- for arena --*/
 const arenaIndexViewEl = document.getElementById('arena-show');
 const arenaCreateViewEl = document.getElementById('arena-create');
-const arenaListContainerEl = document.querySelector('#arena-show section');
+const arenaListContainerIndexEl = document.querySelector('#arena-show section');
+const arenaListContainerCreateEl = document.getElementById('sec-arena-create');
 const arenaCreateInputEls = document.querySelectorAll('#arena-create input')
 
 
@@ -67,8 +68,9 @@ async function addArena() {
                 city: arenaCreateInputEls[1].value,
                 address: arenaCreateInputEls[2].value
             })
-        }).then(res => res.json());
-        alert(`Arena created and has id of ${newArena._id}`);
+        }).then(res => res.json())
+        let html = JSON.stringify(newArena);
+        arenaListContainerCreateEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`
         arenaCreateInputEls[0] = arenaCreateInputEls[1] = arenaCreateInputEls[2] = '';
     }
 }
@@ -82,7 +84,7 @@ function arenaRender() {
         let html = JSON.stringify(arenas);
         // let html = arenas.reduce((html, arena) => html + 
         // `<div>${arena}</div>`, '');
-        arenaListContainerEl.innerHTML = `<div>${html}</div>`;
+        arenaListContainerIndexEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
     }
 }
 
