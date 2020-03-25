@@ -6,24 +6,26 @@ const BASE_URL = "http://localhost:3000/api/"
 
 
 /*-- State Variables --*/
-let arenaView, arenaShow, arenaE, arenas;
+let arenaView, arenaShow, arenaE, arenaD, arenas;
 
 /*-- Cached Elements --*/
 //cached elements for get/create/show/put/delete sections
 const arenaIndexViewEl = document.getElementById('arena-show');
 const areanShowViewEl = document.getElementById('arena-show-single');
 const arenaCreateViewEl = document.getElementById('arena-create');
-const areanEditViewEl = document.getElementById('arena-edit');
+const arenaEditViewEl = document.getElementById('arena-edit');
+const arenaDeleteViewEl = document.getElementById('arena-delete');
 //cached elements for sections that display JSON
 const arenaListContainerIndexEl = document.querySelector('#arena-show section');
 const arenaListContainerCreateEl = document.getElementById('sec-arena-create');
 const arenaListContainerShowEl = document.getElementById('sec-arena-show');
 const arenaListContainerEditEl = document.getElementById('sec-arena-edit');
+const arenaListContainerDeleteEl = document.getElementById('sec-arena-delete');
 //cached elements for input elements for adding/editing/querying/etc.
 const arenaCreateInputEls = document.querySelectorAll('#arena-create input')
 const arenaShowInputEl = document.querySelectorAll('#arena-show-single input');
 const arenaEditInputEl = document.querySelectorAll('#arena-edit input');
-
+const arenaDeleteInputEl = document.querySelectorAll('#arena-delete input');
 
 /*-- Event Listeners --*/
 
@@ -68,6 +70,17 @@ document.getElementById('btn-arena-edit')
 document.getElementById('btn-edit-arena')
 .addEventListener('click', arenaEdit);
 
+//when the DELETE button is pressed to show the DELETE form
+document.getElementById('btn-arena-delete')
+.addEventListener('click', function() {
+    arenaView = 'delete'
+    arenaRender();
+});
+
+//when the DELETE ARENA button is pressed inside the DELETE form
+document.getElementById('btn-delete-one-arena')
+.addEventListener('click', arenaDelete);
+
 /*-- Functions --*/
 
 arenaInit();
@@ -88,7 +101,7 @@ async function arenaGetAll() {
 
 //async function for adding an arena
 async function addArena() {
-    if (arenaCreateInputEls[0].value) {
+    if(arenaCreateInputEls[0].value) {
         let newArena = await fetch(BASE_URL + 'arenas', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -140,6 +153,18 @@ async function arenaEdit() {
     arenaEditInputEl[0].value = arenaEditInputEl[1].value = arenaEditInputEl[2].value = arenaEditInputEl[3].value = '';
 }
 
+//function for deleting an arena
+async function arenaDelete() {
+    if(arenaDeleteInputEl[0]) {
+        arenaD = await fetch(BASE_URL + 'arenas/' + arenaDeleteInputEl[0].value, {
+            method: 'DELETE'
+        }).then(res => res.json())
+    }
+    let html = JSON.stringify(arenaD);
+    arenaListContainerDeleteEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    arenaDeleteInputEl[0].value = '';
+}
+
 //render function for arena section
 function arenaRender() {
     arenaIndexViewEl.style.display = 
@@ -148,8 +173,10 @@ function arenaRender() {
         arenaView === 'create' ? 'block' : 'none';
     areanShowViewEl.style.display = 
         arenaView === 'show' ? 'block' : 'none';
-    areanEditViewEl.style.display =
+    arenaEditViewEl.style.display =
         arenaView === 'edit' ? 'block' : 'none';
+    arenaDeleteViewEl.style.display = 
+        arenaView === 'delete' ? 'block' : 'none';
     if (arenaView === 'index') {
         let html = JSON.stringify(arenas);
         arenaListContainerIndexEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
