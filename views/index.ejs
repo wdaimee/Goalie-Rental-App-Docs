@@ -52,7 +52,7 @@
   <div class="container-fluid padding col-12">
     <div class="row padding px-4">
       <p>This is the backend API documentation for gUber goalie rental app. The documentation has three sections available that explain the CRUD functionalities.</p>
-      <div>
+      <div class="col-12">
         <ul>
           <li><a href="#">Arena</a></li>
           <li><a href="#">User</a></li>
@@ -65,28 +65,33 @@
   <div class="container-fluid padding p-3">
     <div class="col-12">
       <h2 class="display-5">Arena</h2>
-      <div class="container-fluid padding p-3">
-        <p>Get - How To Make an API Request to Get A List of All Arenas</p>
-        <p>Add An Arena - How To Make an API Request to Add an Arena</p>
-        <p>Show An Arena - How To Make an API Request to Show a Single Arena</p>
-        <p>Delete An Arena - How to Make an API Request to Delete an Arena</p>
+      <div class="container-fluid padding p-3 col-12">
+        <p><b>Get</b> - How To Make an API Request to Get A List of All Arenas</p>
+        <p><b>Create</b> - How To Make an API Request to Add an Arena</p>
+        <p><b>Show</b> - How To Make an API Request to Show a Single Arena</p>
+        <p><b>Delete</b> - How to Make an API Request to Delete an Arena</p>
       </div>
       <div class="container-fluid col-12">
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-index'>Get</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-post'>Add An Arena</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-show'>Show An Arena</button>
-        <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-arena-delete'>Delete an Arena</button>
-        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-arena-hide'>Hide</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-index'>GET</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-post'>CREATE</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-show'>SHOW</button>
+        <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-arena-delete'>DELETE</button>
+        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-arena-hide'>HIDE</button>
       </div>
-      <div class="container-fluid padding" id='arena-display'>
+      <div class="container-fluid padding p-3" id='arena-display'>
         <div id='arena-show'>
           <h3 class="display-5">Arena List</h3>
-          <p class="lead">To get a list of all arenas supported by this API, use the following url:</p>
-          <p>https://goalie-rental-app.herokuapp.com/api/</p>
+          <p class="lead">In order to get a complete list of arenas supported by this API, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/arenas</i></p>
+          <p class="lead">You will get the following JSON response:</p>
           <section></section>
         </div>
         <div id='arena-create'>
           <h3 class="display-5">Add an Arena</h3>
+          <p class="lead">To create or an arena to the API, a <b>POST</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/arenas</i></p>
+          <p class="lead">Use the form below to make a POST request for a new arena, the fields: Name, City, and Adress will make up the POST req.body.</p>
+          <p class="lead">After submitting the form below, you will get the following JSON response below.</p>
           <section>
             <div class="input-group mb-3">
               <div class="input-group-prepend">

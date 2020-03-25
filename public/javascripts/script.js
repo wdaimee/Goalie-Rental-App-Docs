@@ -51,7 +51,9 @@ async function arenaInit() {
 
 async function arenaGetAll() {
     arenaView = 'index';
-    arenas = await fetch(BASE_URL + 'arenas').then(res => res.json());
+    arenas = await fetch(BASE_URL + 'arenas')
+    .then(res => res.json());
+    console.log(arenas);
     arenaRender();
 }
 
@@ -77,9 +79,10 @@ function arenaRender() {
     arenaCreateViewEl.style.display = 
         arenaView === 'create' ? 'block' : 'none';
     if (arenaView === 'index') {
-        let html = arenas.reduce((html, arena) => html + 
-        `<div>${arena.name}, ${arena.city}, ${arena.address}</div>`, '');
-        arenaListContainerEl.innerHTML = html;
+        let html = JSON.stringify(arenas);
+        // let html = arenas.reduce((html, arena) => html + 
+        // `<div>${arena}</div>`, '');
+        arenaListContainerEl.innerHTML = `<div>${html}</div>`;
     }
 }
 
