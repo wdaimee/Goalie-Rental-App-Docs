@@ -6,14 +6,17 @@ const BASE_URL = "https://goalie-rental-app.herokuapp.com/api/"
 
 
 /*-- State Variables --*/
-let arenaView;
+let arenaView, arenaShow, arenas;
 
 /*-- Cached Elements --*/
 const arenaIndexViewEl = document.getElementById('arena-show');
+const areanShowViewEl = document.getElementById('arena-show-single');
 const arenaCreateViewEl = document.getElementById('arena-create');
 const arenaListContainerIndexEl = document.querySelector('#arena-show section');
 const arenaListContainerCreateEl = document.getElementById('sec-arena-create');
+const arenaListContainerShowEl = document.getElementById('sec-arena-show');
 const arenaCreateInputEls = document.querySelectorAll('#arena-create input')
+const arenaShowInputEl = document.querySelectorAll('#arena-show-single input');
 
 
 /*-- Event Listeners --*/
@@ -37,6 +40,17 @@ document.getElementById('btn-arena-post')
 document.getElementById('btn-add-arena')
 .addEventListener('click', addArena);
 
+//when the show button is pressed
+document.getElementById('btn-arena-show')
+.addEventListener('click', function() {
+    arenaView = 'show';
+    arenaRender();
+});
+
+//when the get arean button inside the show view is pressed
+document.getElementById('btn-get-arena')
+.addEventListener('click', arenaGetOne);
+
 /*-- Functions --*/
 
 arenaInit();
@@ -52,7 +66,6 @@ async function arenaGetAll() {
     arenaView = 'index';
     arenas = await fetch(BASE_URL + 'arenas')
     .then(res => res.json());
-    console.log(arenas);
     arenaRender();
 }
 
@@ -70,8 +83,19 @@ async function addArena() {
         }).then(res => res.json())
         let html = JSON.stringify(newArena);
         arenaListContainerCreateEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`
-        arenaCreateInputEls[0] = arenaCreateInputEls[1] = arenaCreateInputEls[2] = '';
+        arenaCreateInputEls[0].value = arenaCreateInputEls[1].value = arenaCreateInputEls[2].value = '';
     }
+}
+
+async function arenaGetOne() {
+    if(arenaShowInputEl[0].value) {
+        arenaShow = await fetch(BASE_URL + 'arenas/' + arenaShowInputEl[0].value)
+        .then(res => res.json());
+    }
+    let html = JSON.stringify(arenaShow);
+    arenaListContainerShowEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    render();
+    arenaShowInputEl[0].value = '';
 }
 
 //render function for arena section
@@ -80,6 +104,8 @@ function arenaRender() {
         arenaView === 'index' ? 'block' : 'none';
     arenaCreateViewEl.style.display = 
         arenaView === 'create' ? 'block' : 'none';
+    areanShowViewEl.style.display = 
+        arenaView === 'show' ? 'block' : 'none';
     if (arenaView === 'index') {
         let html = JSON.stringify(arenas);
         // let html = arenas.reduce((html, arena) => html + 
@@ -88,4 +114,4 @@ function arenaRender() {
     }
 }
 
-
+/*-- Below Code for User Section --*/

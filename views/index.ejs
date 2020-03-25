@@ -54,7 +54,7 @@
   <!--- Explanation of docs -->
   <div class="container-fluid padding col-12">
     <div class="row padding px-4">
-      <p>This is the backend API documentation for gUber goalie rental app. The documentation has four sections available that explain the CRUD functionalities.</p>
+      <p>This is the backend API documentation for gUber goalie rental app. The documentation has four sections available that explain the CRUD functionalities for the API.</p>
       <div class="col-12">
         <ul>
           <li><a href="#">Arena</a></li>
@@ -73,14 +73,16 @@
         <p><b>Get</b> - How To Make an API Request to Get A List of All Arenas</p>
         <p><b>Create</b> - How To Make an API Request to Add an Arena</p>
         <p><b>Show</b> - How To Make an API Request to Show a Single Arena</p>
+        <p><b>Put</b> - How To Make an API Request to Edit an Arena</p>
         <p><b>Delete</b> - How to Make an API Request to Delete an Arena</p>
       </div>
       <div class="container-fluid col-12">
         <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-index'>GET</button>
         <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-post'>CREATE</button>
         <button type="button" class="btn btn-outline-success d-inline-block" id='btn-arena-show'>SHOW</button>
+        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-arena-show'>PUT</button>
         <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-arena-delete'>DELETE</button>
-        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-arena-hide'>HIDE</button>
+        <button type="button" class="btn btn-outline-dark d-inline-block" id='btn-arena-hide'>HIDE</button>
       </div>
       <div class="container-fluid padding p-3" id='arena-display'>
         <div id='arena-show'>
@@ -118,6 +120,20 @@
             <button type="button" class="btn btn-success"id="btn-add-arena">Add Arena</button>
           </section>
           <section class="p-3" id='sec-arena-create'></section>
+        </div>
+        <div id='arena-show-single'>
+          <h3 class="display-5">Show a Single Arena</h3>
+          <p class="lead">In order to get JSON data for a single arena, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/arenas/{arenaId}, where the {arenaId} is replaced with the arena._id of the arena you wish to get data on.</i></p>
+          <p class="lead">You can input an arena._id in the below example to see the JSON response:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/arenas/</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-get-arena">Show Arena</button>  
+          <section class="p-3" id="sec-arena-show"></section>
         </div>
       </div>
     </div>
