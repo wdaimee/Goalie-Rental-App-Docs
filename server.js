@@ -12,6 +12,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 //api routers
+//router for display docs
+const docRouter = require('./routes/api/docs');
 //router for game
 const gameRouter = require('./routes/api/games');
 //router for user
@@ -38,6 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 //api routes
+//mount route for api docs
+app.use('/api/docs', docRouter);
 //mount route for game
 app.use('/api/games', gameRouter);
 //mount router for users
