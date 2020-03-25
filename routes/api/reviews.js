@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const reviewCtrl = require('../../controllers/api/reviews');
 
-//get all reviews
-router.get('/reviews', reviewCtrl.all_reviews);
-
 //get all reviews for a user
 router.get('/:id/reviews', reviewCtrl.index);
 

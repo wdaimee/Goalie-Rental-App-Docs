@@ -11,7 +11,7 @@ let arenaView, arenaShow, arenaE, arenaD, arenas;
 /*-- Cached Elements --*/
 //cached elements for get/create/show/put/delete sections
 const arenaIndexViewEl = document.getElementById('arena-show');
-const areanShowViewEl = document.getElementById('arena-show-single');
+const arenaShowViewEl = document.getElementById('arena-show-single');
 const arenaCreateViewEl = document.getElementById('arena-create');
 const arenaEditViewEl = document.getElementById('arena-edit');
 const arenaDeleteViewEl = document.getElementById('arena-delete');
@@ -170,7 +170,7 @@ function arenaRender() {
         arenaView === 'index' ? 'block' : 'none';
     arenaCreateViewEl.style.display = 
         arenaView === 'create' ? 'block' : 'none';
-    areanShowViewEl.style.display = 
+    arenaShowViewEl.style.display = 
         arenaView === 'show' ? 'block' : 'none';
     arenaEditViewEl.style.display =
         arenaView === 'edit' ? 'block' : 'none';
@@ -393,4 +393,126 @@ function userRender() {
         let html = JSON.stringify(users);
         userListContainerIndexEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
     }
+}
+
+/*-- Below Code for Review Section --*/
+/*-- Constants --*/
+
+
+/*-- State Variables --*/
+let reviewView, reviewShow, reviewD, reviews;
+
+/*-- Cached Elements --*/
+//cached elements for get/create/show/put/delete sections
+const reviewShowViewEl = document.getElementById('review-show-single');
+const reviewCreateViewEl = document.getElementById('review-create');
+const reviewDeleteViewEl = document.getElementById('review-delete');
+//cached elements for sections that display JSON
+const reviewListContainerCreateEl = document.getElementById('sec-review-create');
+const reviewListContainerShowEl = document.getElementById('sec-review-show');
+const reviewListContainerDeleteEl = document.getElementById('sec-review-delete');
+//cached elements for input elements for adding/editing/querying/etc.
+const reviewCreateInputEls = document.querySelectorAll('#review-create input')
+const reviewShowInputEl = document.querySelectorAll('#review-show-single input');
+const reviewDeleteInputEl = document.querySelectorAll('#review-delete input');
+
+/*-- Event Listeners --*/
+
+//when hide button is pressed
+document.getElementById('btn-review-hide')
+.addEventListener('click', reviewInit);
+
+//when add a review button is pressed to show the CREATE form
+document.getElementById('btn-review-post')
+.addEventListener('click', function() {
+    reviewView = 'create';
+    reviewRender();
+});
+
+//when add review button is pressed within the CREATE section
+document.getElementById('btn-add-review')
+.addEventListener('click', addReview);
+
+//when the show button is pressed
+document.getElementById('btn-review-show')
+.addEventListener('click', function() {
+    reviewView = 'show';
+    reviewRender();
+});
+
+//when the get review button inside the show view is pressed
+document.getElementById('btn-get-review')
+.addEventListener('click', reviewGetOne);
+
+//when the DELETE button is pressed to show the DELETE form
+document.getElementById('btn-review-delete')
+.addEventListener('click', function() {
+    reviewView = 'delete'
+    reviewRender();
+});
+
+//when the DELETE REVIEW button is pressed inside the DELETE form
+document.getElementById('btn-delete-one-review')
+.addEventListener('click', reviewDelete);
+
+/*-- Functions --*/
+
+reviewInit();
+
+//initial view of review section
+async function reviewInit() {
+    reviewView = 'hide';
+    reviewRender();
+}
+
+//async function for adding a review
+async function addReview() {
+    if(reviewCreateInputEls[1].value) {
+        let newReview = await fetch(BASE_URL + 'users/' + reviewCreateInputEls[1] + '/reviews', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                review_by: reviewCreateInputEls[0].value,
+                user_reviewed: reviewCreateInputEls[1].value,
+                content: reviewCreateInputEls[2].value,
+                rating: reviewCreateInputEls[3].value
+            })
+        }).then(res => res.json())
+        let html = JSON.stringify(newReview);
+        reviewListContainerCreateEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`
+        reviewCreateInputEls[0].value = reviewCreateInputEls[1].value = reviewCreateInputEls[2].value = reviewCreateInputEls[3].value = '';
+    }
+}
+
+//async function for getting all reviews for a user
+async function reviewGetOne() {
+    if(reviewShowInputEl[0].value) {
+        reviewShow = await fetch(BASE_URL + 'users/' + reviewShowInputEl[0].value + '/reviews')
+        .then(res => res.json());
+    }
+    let html = JSON.stringify(reviewShow);
+    reviewListContainerShowEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    reviewShowInputEl[0].value = '';
+}
+
+//function for deleting an review
+async function reviewDelete() {
+    if(reviewDeleteInputEl[0].value) {
+        reviewD = await fetch(BASE_URL + 'users/reviews/' + reviewDeleteInputEl[0].value, {
+            method: 'DELETE'
+        }).then(res => res.json())
+    }
+    let html = JSON.stringify(reviewD);
+    reviewListContainerDeleteEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    reviewDeleteInputEl[0].value = '';
+}
+
+//render function for review section
+function reviewRender() {
+    reviewCreateViewEl.style.display = 
+        reviewView === 'create' ? 'block' : 'none';
+    reviewShowViewEl.style.display = 
+        reviewView === 'show' ? 'block' : 'none';
+    reviewDeleteViewEl.style.display = 
+        reviewView === 'delete' ? 'block' : 'none';
 }

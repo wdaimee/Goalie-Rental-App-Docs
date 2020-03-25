@@ -356,5 +356,88 @@
       </div>
     </div>
   </div>
+  <!-- Section for Reviews -->
+  <div class="container-fluid padding p-3">
+    <div class="col-12">
+      <h2 class="display-5">Reviews</h2>
+      <div class="container-fluid padding p-3 col-12">
+        <p><b>Create</b> - How To Make an API Request to Add a Review for a User</p>
+        <p><b>Show</b> - How To Make an API Request to Show All Reviews for a User</p>
+        <p><b>Delete</b> - How to Make an API Request to Delete a Review</p>
+      </div>
+      <div class="container-fluid col-12">
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-review-post'>CREATE</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-review-show'>SHOW</button>
+        <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-review-delete'>DELETE</button>
+        <button type="button" class="btn btn-outline-dark d-inline-block" id='btn-review-hide'>HIDE</button>
+      </div>
+      <div class="container-fluid padding p-3" id='arena-display'>
+        <div id='review-create'>
+          <h3 class="display-5">Add a Review for a User</h3>
+          <p class="lead">To create or add a review for a particular user, a <b>POST</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/users/{userId}/reviews,</i>where the userId is the user._id of the user being reviewed</p>
+          <p class="lead">Use the form below to make a POST request for a user review, you will need a user._id of a user to review and the user._id of the user who is creating the review.</p>
+          <p class="lead">The fields in the form below will make up the req.body of the POST request.</p>
+          <p class="lead">After submitting the form below, you will get the following JSON response below.</p>
+          <section>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Reviewed By</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="user._id of reviewer">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">ID of User Being Reviewed</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"  placeholder="user._id of user being reviewed">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Review</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Rating</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter a rating from 1 to 5">
+            </div>
+            <button type="button" class="btn btn-success"id="btn-add-review">Add Review</button>
+          </section>
+          <section class="p-3" id='sec-review-create'></section>
+        </div>
+        <div id='review-show-single'>
+          <h3 class="display-5">Show Reviews for a User</h3>
+          <p class="lead">In order show all reviews for a Users, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/users/{userId}/reviews</i>, where the {useraId} is replaced with the user._id of the user you wish to get the reviews for.</p>
+          <p class="lead">You can input a user._id in the below example to see the JSON response:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/users/</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-get-review">Show Reviews</button>  
+          <section class="p-3" id="sec-review-show"></section>
+        </div>
+        <div id='review-delete'>
+          <h3 class="display-5">Delete a Review</h3>
+          <p class="lead">In order to delete a particular review for a user, a <b>DELETE</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/users/reviews/{reviewId}</i>, where the {reviewId} is replaced with the review._id of the review you wish to delete.</p>
+          <p class="lead">You can input a review._id in the below example to see the JSON response, which will be the JSON body of the deleted review:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/users/reviews/</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <button type="button" class="btn btn-danger"id="btn-delete-one-review">Delete Review</button>  
+          <section class="p-3" id="sec-review-delete"></section>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

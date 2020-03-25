@@ -1,10 +1,7 @@
 const Review = require('../../models/Review');
-const User = require('../../models/User');
-
 
 module.exports = {
     index,
-    all_reviews,
     create,
     delete: delete_review
 };
@@ -23,17 +20,6 @@ function index(req, res) {
        }
        res.json(reviews);
    });
-};
-
-//get all reviews (need to complete)
-function all_reviews(req, res) {
-    Review.find({}, function(err, reviews) {
-        if (err) {
-            console.log("error: " + err);
-            res.sendStatus(500);
-        }
-        res.json(reviews);
-    });
 };
 
 // create a new user review
