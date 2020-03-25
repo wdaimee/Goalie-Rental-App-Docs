@@ -125,7 +125,6 @@ async function arenaGetOne() {
     }
     let html = JSON.stringify(arenaShow);
     arenaListContainerShowEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
-    render();
     arenaShowInputEl[0].value = '';
 }
 
@@ -184,3 +183,214 @@ function arenaRender() {
 }
 
 /*-- Below Code for User Section --*/
+
+/*-- Constants --*/
+
+
+/*-- State Variables --*/
+let userView, userShow, userE, userD, users, is_goalie;
+
+/*-- Cached Elements --*/
+//cached elements for get/create/show/put/delete sections
+const userIndexViewEl = document.getElementById('user-show');
+const userShowViewEl = document.getElementById('user-show-single');
+const userCreateViewEl = document.getElementById('user-create');
+const userEditViewEl = document.getElementById('user-edit');
+const userDeleteViewEl = document.getElementById('user-delete');
+//cached elements for sections that display JSON
+const userListContainerIndexEl = document.querySelector('#user-show section');
+const userListContainerCreateEl = document.getElementById('sec-user-create');
+const userListContainerShowEl = document.getElementById('sec-user-show');
+const userListContainerEditEl = document.getElementById('sec-user-edit');
+const userListContainerDeleteEl = document.getElementById('sec-user-delete');
+//cached elements for input elements for adding/editing/querying/etc.
+const userCreateInputEls = document.querySelectorAll('#user-create input')
+const userShowInputEl = document.querySelectorAll('#user-show-single input');
+const userEditInputEl = document.querySelectorAll('#user-edit input');
+const userDeleteInputEl = document.querySelectorAll('#user-delete input');
+
+/*-- Event Listeners --*/
+
+//when hide button is pressed
+document.getElementById('btn-user-hide')
+.addEventListener('click', userInit);
+
+//when get button is pressed
+document.getElementById('btn-user-index')
+.addEventListener('click', userGetAll);
+
+//when add an user button is pressed to show the CREATE form
+document.getElementById('btn-user-post')
+.addEventListener('click', function() {
+    userView = 'create';
+    userRender();
+});
+
+//when add user button is pressed within the CREATE section
+document.getElementById('btn-add-user')
+.addEventListener('click', addUser);
+
+//when the show button is pressed
+document.getElementById('btn-user-show')
+.addEventListener('click', function() {
+    userView = 'show';
+    userRender();
+});
+
+//when the get user button inside the show view is pressed
+document.getElementById('btn-get-user')
+.addEventListener('click', userGetOne);
+
+//when the PUT button is pressed to show the EDIT form
+document.getElementById('btn-user-edit')
+.addEventListener('click', function() {
+    userView = 'edit';
+    userRender();
+});
+
+//when the edit user button is pressed within the PUT section
+document.getElementById('btn-edit-user')
+.addEventListener('click', userEdit);
+
+//when the DELETE button is pressed to show the DELETE form
+document.getElementById('btn-user-delete')
+.addEventListener('click', function() {
+    userView = 'delete';
+    userRender();
+});
+
+//when the DELETE USER button is pressed inside the DELETE form
+document.getElementById('btn-delete-one-user')
+.addEventListener('click', userDelete);
+
+/*-- Functions --*/
+
+userInit();
+
+//initial view of user section
+async function userInit() {
+    userView = 'hide';
+    userRender();
+}
+
+//async function to get a list of users
+async function userGetAll() {
+    userView = 'index';
+    users = await fetch(BASE_URL + 'users')
+    .then(res => res.json());
+    userRender();
+}
+
+//async function for adding a user
+async function addUser() {
+    if(userCreateInputEls[0].value) {
+        let user = {};
+        user.name = userCreateInputEls[0].value;
+        user.email = userCreateInputEls[1].value;
+        user.phone_num = userCreateInputEls[2].value;
+        user.age = userCreateInputEls[3].value;
+        if(userCreateInputEls[4] === 'yes') {
+            user.goalie = true;
+        }
+        else {
+            user.goalie = false;
+        }
+        if(userCreateInputEls[5].value) {
+            user.sport = userCreateInputEls[5].value.split(/\s*[\s,]\s*/);
+            console.log(user.sport);
+        }
+        if(userCreateInputEls[6].value) {
+            user.skill_level = userCreateInputEls[6].value;
+        }
+        let newUser = await fetch(BASE_URL + 'users', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(user)
+        }).then(res => res.json())
+        let html = JSON.stringify(newUser);
+        userListContainerCreateEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`
+        userCreateInputEls[0].value = userCreateInputEls[1].value = userCreateInputEls[2].value = userCreateInputEls[3].value = userCreateInputEls[4].value = userCreateInputEls[5].value = userCreateInputEls[6].value = '';
+    }
+}
+
+//async function for getting one user
+async function userGetOne() {
+    if(userShowInputEl[0].value) {
+        userShow = await fetch(BASE_URL + 'users/' + userShowInputEl[0].value)
+        .then(res => res.json());
+    }
+    let html = JSON.stringify(userShow);
+    userListContainerShowEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    userShowInputEl[0].value = '';
+}
+
+//async function for editing an user
+async function userEdit() {
+    if(userEditInputEl[0].value) {
+        let user = {};
+        if(userEditInputEl[1].value) {
+            user.name = userEditInputEl[1].value;
+        }
+        if(userEditInputEl[2].value) {
+            user.email = userEditInputEl[2].value;
+        }
+        if(userEditInputEl[3].value) {
+            user.phone_num = userEditInputEl[3].value;
+        }
+        if(userEditInputEl[4].value) {
+            user.age = userEditInputEl[4].value;
+        }
+        if(userEditInputEl[5].value){
+            if(userEditInputEl[5].value === 'yes') {
+                user.goalie = true;
+            }
+            else {
+                user.goalie = false;
+            }
+        }
+        if(userEditInputEl[6].value) {
+            user.sport = userEditInputEl[6].value.split(/\s*[\s,]\s*/);
+        }
+        if(userEditInputEl[7].value) {
+            user.skill_level = userEditInputEl[7].value;
+        }
+        userE = await fetch(BASE_URL + 'users/' + userEditInputEl[0].value, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(user)
+        }).then(res => res.json())
+    }
+    let html = JSON.stringify(userE);
+    userListContainerEditEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    userEditInputEl[0].value = userEditInputEl[1].value = userEditInputEl[2].value = userEditInputEl[3].value = userEditInputEl[4].value = userEditInputEl[5].value = userEditInputEl[6].value = userEditInputEl[7].value = '';
+}
+
+//function for deleting a user
+async function userDelete() {
+    if(userDeleteInputEl[0]) {
+        userD = await fetch(BASE_URL + 'users/' + userDeleteInputEl[0].value, {
+            method: 'DELETE'
+        }).then(res => res.json())
+    }
+    let html = JSON.stringify(userD);
+    userListContainerDeleteEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    userDeleteInputEl[0].value = '';
+}
+
+//render function for user section
+function userRender() {
+    userIndexViewEl.style.display = 
+        userView === 'index' ? 'block' : 'none';
+    userCreateViewEl.style.display = 
+        userView === 'create' ? 'block' : 'none';
+    userShowViewEl.style.display = 
+        userView === 'show' ? 'block' : 'none';
+    userEditViewEl.style.display =
+        userView === 'edit' ? 'block' : 'none';
+    userDeleteViewEl.style.display = 
+        userView === 'delete' ? 'block' : 'none';
+    if (userView === 'index') {
+        let html = JSON.stringify(users);
+        userListContainerIndexEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    }
+}
