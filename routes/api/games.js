@@ -25,7 +25,7 @@ router.get('/request', gamesCtrl.requestor);
 router.get('/goalie', gamesCtrl.goalie);
 
 //get a list of all active requests available (looks to be ok - further testing needed)
-router.get('/active/all', gamesCtrl.all_active)
+router.get('/open/all', gamesCtrl.all_open)
 
 
 //get a list of all games (works)

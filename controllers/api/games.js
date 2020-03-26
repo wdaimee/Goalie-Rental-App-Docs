@@ -9,7 +9,7 @@ module.exports = {
     all_games,
     add_goalie,
     confirm_game,
-    all_active,
+    all_open,
     show,
     update,
     delete: delete_game
@@ -78,7 +78,7 @@ function goalie(req, res) {
 };
 
 //function to view all active games available - works
-function all_active(req, res) {
+function all_open(req, res) {
     Game.find({status: 'open', request_date: {$gt: new Date()}})
     .populate('arena')
     .populate('goalie')
