@@ -4,38 +4,53 @@ const User = require('../../models/User');
 
 module.exports = {
     create,
-    // requestor_history, /*--not working at the moment*/
-    // goalie_history, /*--not working at the moment*/
+    requestor_history,
+    goalie_history, 
     all_games,
-    //add_goalie /*- not working at the moment*/,
+    add_goalie,
+    confirm_game,
     // requestor_game_state, /*- not working at the moment*/,
     // goalie_game_state, /*- not working at the moment*/,
     all_active,
     show,
-    // create,
     update,
     delete: delete_game
 };
 
-//send a list of all games requested by a user, query for now(history)
+//send a list of all games requested by a user - works
 function requestor_history(req, res) {
-    Game.find({requestor: req.user, status: 'confirmed'})
+    // if (req.query.status === "all") {
+    //     Game.find({requestor: req.user})
+    //     .populate('requestor')
+    //     .populate('arena')
+    //     .populate('goalie')
+    //     .exec((err, games) => {
+    //         if (err) {
+    //             console.log('error: ' + err);
+    //             res.sendStatus(500);
+    //             return
+    //         }
+    //         return res.json(games);
+    //     });
+    // }
+    console.log(req.query.status)
+    Game.findOne({requestor: req.user, status: req.query.status})
     .populate('requestor')
     .populate('arena')
     .populate('goalie')
     .exec((err, games) => {
-        console.log(games);
+        console.log(games.status);
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
         }
         res.json(games);
     });
-}
+};
 
-//send a list of all games a goalie has played 
+//send a list of all games a goalie has played - works
 function goalie_history(req, res) {
-    Game.find({goalie: req.user, status: 'confirmed'})
+    Game.find({goalie: req.user, status: req.query.status})
     .populate('requestor')
     .populate('arena')
     .populate('goalie')
@@ -47,7 +62,7 @@ function goalie_history(req, res) {
         }
         res.json(games);
     });
-}
+};
 
 //see a list of active requests for the requestor - further testing required, adding gameState to query to see active, pending, or confirmed games
 function requestor_game_state(req, res) {
@@ -62,7 +77,7 @@ function requestor_game_state(req, res) {
         }
         res.json(games);
     });
-}
+};
 
 //see a list of pending/confirmed games for the goalie 
 function goalie_game_state(req, res) {
@@ -77,7 +92,7 @@ function goalie_game_state(req, res) {
         }
         res.json(games);
     });
-}
+};
 
 //function to view all active games available - works
 function all_active(req, res) {
@@ -95,17 +110,24 @@ function all_active(req, res) {
     });
 };
 
-//function to add a goalie to the game - does not work
+//function to add a goalie to the game - Works!
 function add_goalie(req, res) {
+    if (req.user.goalie === false ) {
+        return res.json({response: 'You\'re not a goalie'});
+    }
     Game.findById(req.params.id, function(err, game) {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
         }
-        if(req.user.goalie === true) {
-            game.goalie = req.user;
-            game.status = 'pending';
+        if (req.user.sport.includes(game.sport) === false) {
+            return res.json({response: 'You don\'t play this sport'});
         }
+        if (req.user.skill_level !== game.skill_level) {
+            return res.json({response: 'You are not at the same skill level'});
+        }
+        game.goalie = req.user;
+        game.status = 'pending';
         game.save((err, game) => {
             if (err) {
                 console.log("error: " + err);
@@ -126,16 +148,19 @@ function add_goalie(req, res) {
     });
 };
 
-//do not know if works
-function confirm_game() {
+//Works!
+function confirm_game(req, res) {
     Game.findById(req.params.id, function(err, game) {
         if (err) {
             console.log('err:' + err);
             res.sendStatus(500);
         }
-        if (game.requestor === req.user) {
-            game.status = 'confirmed';
+        console.log(req.user.id);
+        console.log(game.requestor._id);
+        if (req.user.id != game.requestor._id) {
+            return res.json({response: 'You don\'t have access to confirm the game, only the requestor does.'})
         }
+        game.status = 'confirmed';
         game.save((err, game) => {
             if (err) {
                 console.log('err:' + err);
@@ -151,10 +176,10 @@ function confirm_game() {
                     res.sendStatus(500);
                 }
                 res.json(game);
-            })
-        })
-    })
-}
+            });
+        });
+    });
+};
 
 //send list of all games (completed)
 function all_games(req, res) {
@@ -186,7 +211,7 @@ function show(req, res) {
     });
 };
 
-//create a new game (completed) - Req. Query is Not Working
+//create a new game (completed) - Working!
 function create(req, res) {
     const new_game = new Game({
         sport: req.body.sport,
@@ -223,38 +248,55 @@ function create(req, res) {
 
 //update a game (completed)
 function update(req, res) {
-    Game.findByIdAndUpdate(req.params.id, req.body, {new: true})
-    .exec((err, game) => {
+    Game.findById(req.params.id, function(err, game) {
         if (err) {
-            console.log("error: " + err);
-            res.sendStatus(500);
+            console.log("error:" + err);
         }
-        console.log(game);
-        Game.findOne(game)
-        .populate('arena')
-        .populate('goalie')
-        .populate('requestor')
+        if (req.user.id != game.requestor._id) {
+            return res.json({response: 'You don\'t have permission to edit this game, only the requestor can'})
+        }
+        Game.findByIdAndUpdate(req.params.id, req.body, {new: true})
         .exec((err, game) => {
             if (err) {
-                console.log('error: ' + err);
+                console.log("error: " + err);
                 res.sendStatus(500);
             }
-            res.json(game);
+            console.log(game);
+            Game.findOne(game)
+            .populate('arena')
+            .populate('goalie')
+            .populate('requestor')
+            .exec((err, game) => {
+                if (err) {
+                    console.log('error: ' + err);
+                    res.sendStatus(500);
+                }
+                res.json(game);
+            });
         });
     });
 };
 
 //delete a game (completed)
 function delete_game(req, res) {
-    Game.findByIdAndDelete(req.params.id)
-    .populate('arena')
-    .populate('goalie')
-    .populate('requestor')
-    .exec((err, game) => {
+    Game.findById(req.params.id, function(err, game) {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
         }
-        res.json(game);
+        if (req.user.id != game.requestor._id) {
+            return res.json({response: "You don't have permission to delete this game."})
+        }
+        Game.findByIdAndDelete(game)
+        .populate('arena')
+        .populate('goalie')
+        .populate('requestor')
+        .exec((err, game) => {
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            res.json(game);
+        });
     });
 };
