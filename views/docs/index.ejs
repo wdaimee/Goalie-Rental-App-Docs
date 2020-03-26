@@ -16,7 +16,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-md navbar-dark bgsticky-top" style="background-color: black">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/index">
+      <a class="navbar-brand" href="#">
         gÜber Docs
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
@@ -24,17 +24,17 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Arena</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#arena">Arena</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">User</a>
+            <a class="nav-link" href="#users">User</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Reviews</a>
+            <a class="nav-link" href="#reviews">Reviews</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Game</a>
+            <a class="nav-link" href="#game">Game</a>
           </li>
       </div>
     </div>
@@ -57,10 +57,10 @@
       <p>This is the backend API documentation for gÜber goalie rental app. The documentation has four sections available that explain the CRUD functionalities for the API.</p>
       <div class="col-12">
         <ul>
-          <li><a href="#">Arena</a></li>
-          <li><a href="#">User</a></li>
-          <li><a href="#">Reviews</a></li>
-          <li><a href="#">Game</a></li>
+          <li><a href="#arena">Arena</a></li>
+          <li><a href="#users">User</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#game">Game</a></li>
         </ul>
       </div>
     </div>
@@ -68,6 +68,7 @@
   <!-- Section for Arena -->
   <div class="container-fluid padding p-3">
     <div class="col-12">
+      <a id="arena"></a>
       <h2 class="display-5">Arena</h2>
       <div class="container-fluid padding p-3 col-12">
         <p><b>Get</b> - How To Make an API Request to Get A List of All Arenas</p>
@@ -189,6 +190,7 @@
   <!-- Section for Users -->
   <div class="container-fluid padding p-3">
     <div class="col-12">
+      <a id="users"></a>
       <h2 class="display-5">Users</h2>
       <div class="container-fluid padding p-3 col-12">
         <p><b>Get</b> - How To Make an API Request to Get A List of All Users</p>
@@ -359,6 +361,7 @@
   <!-- Section for Reviews -->
   <div class="container-fluid padding p-3">
     <div class="col-12">
+      <a id="reviews"></a>
       <h2 class="display-5">Reviews</h2>
       <div class="container-fluid padding p-3 col-12">
         <p><b>Create</b> - How To Make an API Request to Add a Review for a User</p>
@@ -435,6 +438,296 @@
           </div>
           <button type="button" class="btn btn-danger"id="btn-delete-one-review">Delete Review</button>  
           <pre class="p-3" id="sec-review-delete"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Section for Game -->
+  <div class="container-fluid padding p-3">
+    <div class="col-12">
+      <a id="game"></a>
+      <h2 class="display-5">Game</h2>
+      <div class="container-fluid padding p-3 col-12">
+        <p><b>Get - Requestor</b> - How To Make an API Request to Get A List of All Active Game Requests for a User</p>
+        <p><b>Get - Request History</b> - How To Make an API Request to Get a History of Requests for a User</p>
+        <p><b>Get - Goalie History</b> - How To Make an API Request to Get a History of Games Played for a User</p>
+        <p><b>Get - All Active Games</b> - How To Make an API to Get a List of All Active Requests for All Users</p>
+        <p><b>Get - All Games</b> - How to Make an API Request to Get A List of All Games</p>
+        <p><b>Create</b> - How to Make an API Request to Create a Game</p>
+        <p><b>Put</b> - How to Make an API Request to Edit a Game</p>
+        <p><b>Show</b> - How to Make an API Request to See Details of a Game</p>
+        <p><b>Delete</b> - How to Make an API Request to Delete a Game</p>
+        <p><b>Put - Add a Goalie</b> - How to Make an API Request to Add a Goalie to a Game</p>
+        <p><b>Put - Confirm a Goalie</b> - How to Make an API Request for the Requestor to Confirm a Goalie</p>
+      </div>
+      <div class="container-fluid col-12">
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-request'>GET - REQUESTOR</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-request-history'>GET - REQUEST HISTORY</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-goalie-history'>GET - GOALIE HISTORY</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-all-active'>GET - ALL ACTIVE</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-all-game'>GET - ALL GAMES</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-create'>CREATE</button>
+        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-game-edit'>PUT</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-show'>SHOW</button>
+        <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-game-delete'>DELETE</button>
+        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-game-add-goalie'>PUT - ADD GOALIE</button>
+        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-game-confirm-goalie'>PUT - CONFIRM GOALIE</button>
+        <button type="button" class="btn btn-outline-dark d-inline-block" id='btn-user-hide'>HIDE</button>
+      </div>
+      <div class="container-fluid padding p-3" id='arena-display'>
+        <div id='game-request'>
+          <h3 class="display-5">All Active Games for User</h3>
+          <p class="lead">In order to get a a list of active games for a particular user, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/games/active?currentUserId={user._id}</i>, where {user._id} is the id of the user which you would like to get active requests for.</p>
+          <p class="lead">You can use the below form to enter the user._id to view active requests for a particular user and see the JSON response body:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/active?currentUserId=</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{user._id}">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-request-game">Get Active Games</button>
+          <pre></pre>
+        </div>
+        <div id='game-goalie-history'>
+          <h3 class="display-5">History of Games Played by a User (Goalie)</h3>
+          <p class="lead">In order to get a complete list of games played by a goalie, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/goalie_history?currentUserId={user._id}, 
+            where {user.id} is the user._id of the user which you want to see the games played history for.
+          </i></p>
+          <p class="lead">You enter the user._id in the form below to see an example of the returned JSON body:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/goalie_history?currentUserId=</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{user._id}">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-goalie-history-game">Get Games Played History</button>
+          <pre></pre>
+        </div>    
+        <div id='game-request-history'>
+          <h3 class="display-5">Request History for a User</h3>
+          <p class="lead">In order to get a complete list of requests for a user, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/request_history?currentUserId={user._id}, 
+            where {user.id} is the user._id of the user which you want to see the request history for.
+          </i></p>
+          <p class="lead">You enter the user._id in the form below to see an example of the returned JSON body:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/request_history?currentUserId=</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{user._id}">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-request-history-game">Get Request History</button>
+          <pre></pre>
+        </div>
+        <div id='game-all-active'>
+          <h3 class="display-5">All Active Games</h3>
+          <p class="lead">To get a complete list of active games where a goalie hasn't been found, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/active/all</i></p>
+          <p class="lead">You will get the below JSON response:</p>
+          <pre></pre>
+        </div>
+        <div id='game-all'>
+          <h3 class="display-5">All Games</h3>
+          <p class="lead">To get a complete list of all games in the API database, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/all</i></p>
+          <p class="lead">You will get the below JSON response:</p>
+          <pre></pre>
+        </div>
+        <div id='game-create'>
+          <h3 class="display-5">Add a Game</h3>
+          <p class="lead">To create a goalie request for a game, a <b>POST</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games</i></p>
+          <p class="lead">Use the form below to make a POST request for a new game request, the fields in the below form will make up the req.body.</p>
+          <p class="lead">After submitting the form below, you will get the following JSON response below.</p>
+          <section>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Sport</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter hockey, lacrosse, or soccer">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Skill Level</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter A, B, C, D, or Beginner for game skill level">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">City</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Toronto, Brampton, and Mississauga">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Arena</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the Arena's Name">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Request Time</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Request Date</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="YYYY-MM-DD">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Team Name</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Please give a brief description of the game, ex. 5v5">
+            </div>
+            <button type="button" class="btn btn-success"id="btn-add-game">Create Game Request</button>
+          </section>
+          <pre class="p-3" id='sec-game-create'></pre>
+        </div>
+        <div id='game-show-single'>
+          <h3 class="display-5">Show a Single Game</h3>
+          <p class="lead">In order to get JSON data for a single game, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}</i>, where the {gameId} is replaced with the game._id of the game/request you wish to get data on.</p>
+          <p class="lead">You can input an game._id in the below example to see the JSON response:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{gameId}">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-get-game">Show Game</button>  
+          <pre class="p-3" id="sec-game-show"></pre>
+        </div>
+        <div id='game-edit'>
+          <h3 class="display-5">Edit a Game Request</h3>
+          <p class="lead">In order to edit a game request for a goalie, a <b>PUT</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}</i>, where the {gameId} is replaced with the game._id of the game you wish to edit.</p>
+          <p class="lead">You can input a game._id in the below URI as an example and edit the game data:</p>
+          <section>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder='{gameId}''>
+            </div>
+            <section>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Sport</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter hockey, lacrosse, or soccer">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Skill Level</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter A, B, C, D, or Beginner for game skill level">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">City</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Toronto, Brampton, and Mississauga">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Arena</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the Arena's Name">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Request Time</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Request Date</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="YYYY-MM-DD">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Team Name</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Please give a brief description of the game, ex. 5v5">
+              </div>
+            <button type="button" class="btn btn-success"id="btn-edit-game">Edit Game Request</button>
+          </section>
+          <pre class="p-3" id="sec-game-edit"></pre> 
+        </div>
+        <div id='game-delete'>
+          <h3 class="display-5">Delete a Game Request</h3>
+          <p class="lead">In order to delete a game request from your API, a <b>DELETE</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}</i>, where the {gameId} is replaced with the game._id of the game you wish to delete.</p>
+          <p class="lead">You can input a game._id in the below example to see the JSON response, which will be the JSON body of the deleted game:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{gameId}">
+          </div>
+          <button type="button" class="btn btn-danger"id="btn-delete-one-game">Delete Game Request</button>  
+          <pre class="p-3" id="sec-game-delete"></pre>
+        </div>
+        <div id='game-add-goalie'>
+          <h3 class="display-5">Add Goalie to A Game</h3>
+          <p class="lead">In order to add a goalie to a game, a <b>PUT</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}/add_goalie?currentUserId={userId}</i>, where the {gameId} is replaced with the game._id of the game you wish to add a goalie to
+            and the {userId} is the user._id of the goalie that wants to fill the game request. Once a goalie has been added to the game, the status of the game will change from 'active' to 'pending'</p>
+          <p class="lead">You can input a game._id and a user._id in the below example to see the JSON response, which will be the JSON body of the game with the game now having a goalie and a status of 'pending'.</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">{gameId}</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-delete-one-game">Add a Goalie to the Game Request</button>  
+          <pre class="p-3" id="sec-game-add-goalie"></pre>
+        </div>
+        <div id='game-confirm-goalie'>
+          <h3 class="display-5">Confirming a Goalie For a Game Request</h3>
+          <p class="lead">Once a goalie has made a request to join a game, the requestor can confirm the game by making a  <b>PUT</b> request to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}/confirm_goalie?currentUserId={userId}</i>, where the {gameId} is replaced with the game._id of the game (with 'pending' status) 
+            that you want to confirm and the {userId} is the user._id of the requestor of the game. Once a goalie has been confirmed, the status of the game will change from 'pending' to 'confirmed'</p>
+          <p class="lead">You can input a game._id and a user._id in the below example to see the JSON response, which will be the JSON body of the game with the game now have a status of 'confirmed'.</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">{gameId}</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-delete-one-game">Confirm a Goalie for the Game</button>  
+          <pre class="p-3" id="sec-game-confirm-goalie"></pre>
         </div>
       </div>
     </div>
