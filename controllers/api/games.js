@@ -1,6 +1,6 @@
 const Game = require('../../models/Game');
 const Arena = require('../../models/Arena');
-const User = require('../../models/User');
+
 
 module.exports = {
     create,
@@ -15,7 +15,7 @@ module.exports = {
     delete: delete_game
 };
 
-//send a list of all games requested by a user - works
+//send a list of games for a user by following sort: all, open, pending, confirmed - works
 function requestor(req, res) {
     if(req.query.status === 'all') {
         Game.find({requestor: req.user})
@@ -77,7 +77,7 @@ function goalie(req, res) {
     }
 };
 
-//function to view all active games available - works
+//function to view all open games available - works
 function all_open(req, res) {
     Game.find({status: 'open', request_date: {$gt: new Date()}})
     .populate('arena')

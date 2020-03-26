@@ -23,6 +23,8 @@ const userRouter = require('./routes/api/users');
 const reviewRouter = require('./routes/api/reviews');
 //router for arenas
 const arenaRouter = require('./routes/api/arenas');
+//User model for req.user middleware
+const User = require('./models/User');
 
 
 var app = express();
@@ -37,6 +39,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(req, res, next) {
+  let userId = null;
+  if (req.query.currentUserId) userId = req.query.currentUserId;
+  if (req.body.currentUserId) userId = req.body.currentUserId;
+  if (userId) {
+    User.findById(userId, function(err, user) {
+      req.user = user;
+      next();
+    });
+  } else {
+    next();
+  }
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -1,22 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const gamesCtrl = require('../../controllers/api/games');
-const User = require('../../models/User');
-
-
-router.use(function(req, res, next) {
-    let userId = null;
-    if (req.query.currentUserId) userId = req.query.currentUserId;
-    if (req.body.currentUserId) userId = req.body.currentUserId;
-    if (userId) {
-      User.findById(userId, function(err, user) {
-        req.user = user;
-        next();
-      });
-    } else {
-      next();
-    }
-  });
 
 //get a list of requestors history - working
 router.get('/request', gamesCtrl.requestor);
