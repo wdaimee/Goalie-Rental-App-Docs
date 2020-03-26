@@ -4,13 +4,11 @@ const User = require('../../models/User');
 
 module.exports = {
     create,
-    requestor_history,
-    goalie_history, 
+    requestor,
+    goalie, 
     all_games,
     add_goalie,
     confirm_game,
-    // requestor_game_state, /*- not working at the moment*/,
-    // goalie_game_state, /*- not working at the moment*/,
     all_active,
     show,
     update,
@@ -18,85 +16,70 @@ module.exports = {
 };
 
 //send a list of all games requested by a user - works
-function requestor_history(req, res) {
-    // if (req.query.status === "all") {
-    //     Game.find({requestor: req.user})
-    //     .populate('requestor')
-    //     .populate('arena')
-    //     .populate('goalie')
-    //     .exec((err, games) => {
-    //         if (err) {
-    //             console.log('error: ' + err);
-    //             res.sendStatus(500);
-    //             return
-    //         }
-    //         return res.json(games);
-    //     });
-    // }
-    console.log(req.query.status)
-    Game.findOne({requestor: req.user, status: req.query.status})
-    .populate('requestor')
-    .populate('arena')
-    .populate('goalie')
-    .exec((err, games) => {
-        console.log(games.status);
-        if (err) {
-            console.log("error: " + err);
-            res.sendStatus(500);
+function requestor(req, res) {
+    if(req.query.status === 'all') {
+        Game.find({requestor: req.user})
+        .populate('requestor')
+        .populate('arena')
+        .populate('goalie')
+        .exec((err, games) => {
+            console.log(games);
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
         }
-        res.json(games);
-    });
+            res.json(games);
+        });
+    } else {
+        Game.find({requestor: req.user, status: req.query.status})
+        .populate('requestor')
+        .populate('arena')
+        .populate('goalie')
+        .exec((err, games) => {
+            console.log(games);
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            res.json(games);
+        });
+    }
 };
 
-//send a list of all games a goalie has played - works
-function goalie_history(req, res) {
-    Game.find({goalie: req.user, status: req.query.status})
-    .populate('requestor')
-    .populate('arena')
-    .populate('goalie')
-    .exec((err, games) => {
-        console.log(games);
-        if (err) {
-            console.log("error: " + err);
-            res.sendStatus(500);
+//send a list of games a goalie has played - query for all, pending, confirmed - works
+function goalie(req, res) {
+    if(req.query.status === 'all') {
+        Game.find({goalie: req.user})
+        .populate('requestor')
+        .populate('arena')
+        .populate('goalie')
+        .exec((err, games) => {
+            console.log(games);
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
         }
-        res.json(games);
-    });
-};
-
-//see a list of active requests for the requestor - further testing required, adding gameState to query to see active, pending, or confirmed games
-function requestor_game_state(req, res) {
-    Game.find({status: req.query.gameState, requestor: req.user})
-    .populate('arena')
-    .populate('goalie')
-    .populate('requestor')
-    .exec((err, games) => {
-        if (err) {
-            console.log("index error: " + err);
-            res.sendStatus(500);
-        }
-        res.json(games);
-    });
-};
-
-//see a list of pending/confirmed games for the goalie 
-function goalie_game_state(req, res) {
-    Game.find({status: req.query.gameState, goalie: req.user})
-    .populate('arena')
-    .populate('goalie')
-    .populate('requestor')
-    .exec((err, games) => {
-        if (err) {
-            console.log("index error: " + err);
-            res.sendStatus(500);
-        }
-        res.json(games);
-    });
+            res.json(games);
+        });
+    } else {
+        Game.find({goalie: req.user, status: req.query.status})
+        .populate('requestor')
+        .populate('arena')
+        .populate('goalie')
+        .exec((err, games) => {
+            console.log(games);
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            res.json(games);
+        });
+    }
 };
 
 //function to view all active games available - works
 function all_active(req, res) {
-    Game.find({status: 'active', request_date: {$gt: new Date()}})
+    Game.find({status: 'open', request_date: {$gt: new Date()}})
     .populate('arena')
     .populate('goalie')
     .populate('requestor')
@@ -262,11 +245,12 @@ function update(req, res) {
                 res.sendStatus(500);
             }
             console.log(game);
-            Game.findOne(game)
+            Game.find(game)
             .populate('arena')
             .populate('goalie')
             .populate('requestor')
             .exec((err, game) => {
+                console.log(game);
                 if (err) {
                     console.log('error: ' + err);
                     res.sendStatus(500);

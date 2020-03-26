@@ -18,18 +18,11 @@ router.use(function(req, res, next) {
     }
   });
 
-//get a list of all games requested by a user if req.query.requestor is true 
-// or get a list of all games played by a goalie if req.query.goalie is true(history)
-// router.get('/', gamesCtrl.index);
-
-// //get a list of active requests for a requestor
-// router.get('/active', gamesCtrl.active)
-
 //get a list of requestors history - working
-router.get('/request_history', gamesCtrl.requestor_history);
+router.get('/request', gamesCtrl.requestor);
 
 //get a list of goalie history - working
-router.get('/goalie_history', gamesCtrl.goalie_history);
+router.get('/goalie', gamesCtrl.goalie);
 
 //get a list of all active requests available (looks to be ok - further testing needed)
 router.get('/active/all', gamesCtrl.all_active)

@@ -35,8 +35,8 @@ const gameSchema = new Schema({
     description: String,
     status: {
         type: String,
-        enum: ['active', 'pending', 'confirmed'],
-        default: 'active'
+        enum: ['pending', 'confirmed', 'open'],
+        default: 'open'
     },
     requestor: {type: Schema.Types.ObjectId, ref: 'User'},
     goalie: {type: Schema.Types.ObjectId, ref: 'User'}
