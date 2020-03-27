@@ -516,3 +516,297 @@ function reviewRender() {
     reviewDeleteViewEl.style.display = 
         reviewView === 'delete' ? 'block' : 'none';
 }
+
+/*-- Below Code for Game Section --*/
+/*-- Constants --*/
+
+
+/*-- State Variables --*/
+let gameView, gamesAll, gamesAllOpen, gameShow, gameRequest, gameGoalie, gameAddGoalie, gameConfirm;
+
+/*-- Cached Elements --*/
+//cached elements for get/create/show/put/delete sections
+const gameAllViewEl = document.getElementById('game-all');
+const gameAllOpenViewEl = document.getElementById('game-all-open');
+const gameShowViewEl = document.getElementById('game-show');
+const gameRequestsViewEl = document.getElementById('game-requests');
+const gameGoalieViewEl = document.getElementById('game-goalie');
+const gameCreateViewEl = document.getElementById('game-create');
+const gameAddGoalieViewEl = document.getElementById('game-add-goalie');
+const gameConfirmViewEl = document.getElementById('game-confirm');
+// const reviewDeleteViewEl = document.getElementById('review-delete');
+//cached elements for sections that display JSON
+const gameListContainerAllGamesEl = document.querySelector('#game-all pre');
+const gameListContainerAllOpenEl = document.querySelector('#game-all-open pre');
+const gameListContainerShowEl = document.querySelector('#game-show pre');
+const gameListContainerRequestEl = document.querySelector('#game-requests pre');
+const gameListContainerGoalieEl = document.querySelector('#game-goalie pre');
+const gameListContainerCreateEl = document.querySelector('#game-create pre');
+const gameListContainerAddGoalieEl = document.querySelector('#game-add-goalie pre');
+const gameListContainerConfirmEl = document.querySelector('#game-confirm pre');
+// const gameListContainerDeleteEl = document.getElementById('sec-review-delete');
+//cached elements for input elements for adding/editing/querying/etc.
+const gameShowInputEl = document.querySelectorAll('#game-show input');
+const gameRequestInputEl = document.querySelectorAll('#game-requests input');
+const gameGoalieInputEl = document.querySelectorAll('#game-goalie input');
+const gameCreateInputEl = document.querySelectorAll('#game-create input');
+const gameAddGoalieInputEl = document.querySelectorAll('#game-add-goalie input');
+const gameConfirmInputEl = document.querySelectorAll('#game-confirm input');
+// const reviewDeleteInputEl = document.querySelectorAll('#review-delete input');
+
+/*-- Event Listeners --*/
+
+//when hide button is pressed
+document.getElementById('btn-game-hide')
+.addEventListener('click', gameInit);
+
+//when get all games button is pressed
+document.getElementById('btn-game-all')
+.addEventListener('click', gameGetAll);
+
+//when the all open games button is pressed
+document.getElementById('btn-game-all-open')
+.addEventListener('click', gameGetAllOpen);
+
+//when the show button is pressed
+document.getElementById('btn-game-show')
+.addEventListener('click', function() {
+    gameView = 'show';
+    gameRender();
+});
+
+//when the get details button inside the show view is pressed
+document.getElementById('btn-show-game')
+.addEventListener('click', gameGetOne);
+
+//when the GET-Requests button is pressed
+document.getElementById('btn-game-request')
+.addEventListener('click', function() {
+    gameView = 'request';
+    gameRender();
+});
+
+//when the get request button is pressed in side the GET-REQUEST view
+document.getElementById('btn-request-game')
+.addEventListener('click', gameRequestFunc);
+
+//when the GET-Goalie request button is pressed
+document.getElementById('btn-game-goalie')
+.addEventListener('click', function() {
+    gameView = 'goalie';
+    gameRender();
+});
+
+//when the get request button is pressed in side the GET-GOALIE view
+document.getElementById('btn-goalie-game')
+.addEventListener('click', gameGoalieFunc);
+
+//when create button is pressed to show the CREATE form
+document.getElementById('btn-game-create')
+.addEventListener('click', function() {
+    gameView = 'create';
+    gameRender();
+});
+
+//when add game button is pressed within the CREATE section
+document.getElementById('btn-add-game')
+.addEventListener('click', gameCreate);
+
+//when the add goalie button is pressed to show the form
+document.getElementById('btn-game-add-goalie')
+.addEventListener('click', function() {
+    gameView = "add-goalie";
+    gameRender();
+});
+
+//when the add goalie button is pressed within the ADD GOALIE form
+document.getElementById('btn-add-goalie-game')
+.addEventListener('click', gameAddGoalieFunc)
+
+//when the confirm goalie button is pressed to show the form
+document.getElementById('btn-game-confirm-goalie')
+.addEventListener('click', function() {
+    gameView = "confirm";
+    gameRender();
+});
+
+document.getElementById('btn-confirm-game')
+.addEventListener('click', gameConfirmFunc)
+
+
+//when the get review button inside the show view is pressed
+// document.getElementById('btn-get-review')
+// .addEventListener('click', reviewGetOne);
+
+//when the DELETE button is pressed to show the DELETE form
+// document.getElementById('btn-review-delete')
+// .addEventListener('click', function() {
+//     reviewView = 'delete'
+//     reviewRender();
+// });
+
+//when the DELETE REVIEW button is pressed inside the DELETE form
+// document.getElementById('btn-delete-one-review')
+// .addEventListener('click', reviewDelete);
+
+/*-- Functions --*/
+
+gameInit();
+
+//initial view of review section
+async function gameInit() {
+    gameView = 'hide';
+    gameRender();
+}
+
+//async function to get a list of all games
+async function gameGetAll() {
+    gameView = 'view-all';
+    gamesAll = await fetch(BASE_URL + 'games/all')
+    .then(res => res.json());
+    gameRender();
+}
+
+//async function to get a list of all open games
+async function gameGetAllOpen() {
+    gameView = 'view-all-open';
+    gamesAllOpen = await fetch(BASE_URL + 'games/open/all')
+    .then(res => res.json());
+    gameRender();
+}
+
+//async function for getting a single game
+async function gameGetOne() {
+    if(gameShowInputEl[0].value) {
+        gameShow = await fetch(BASE_URL + 'games/' + gameShowInputEl[0].value)
+        .then(res => res.json());
+    }
+    let html = JSON.stringify(gameShow);
+    gameListContainerShowEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    gameShowInputEl[0].value = '';
+}
+
+//async function for getting requests
+async function gameRequestFunc() {
+    if(gameRequestInputEl[0].value) {
+        gameRequest = await fetch(BASE_URL + 'games/request?currentUserId=' + gameRequestInputEl[0].value + '&status=' + gameRequestInputEl[1].value)
+        .then(res => res.json());
+    }
+    let html = JSON.stringify(gameRequest);
+    gameListContainerRequestEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    gameRequestInputEl[0].value = gameRequestInputEl[1].value = '';
+}
+
+//async function for getting goalie history
+async function gameGoalieFunc() {
+    if(gameGoalieInputEl[0].value) {
+        gameGoalie = await fetch(BASE_URL + 'games/goalie?currentUserId=' + gameGoalieInputEl[0].value + '&status=' + gameGoalieInputEl[1].value)
+        .then(res => res.json());
+    }
+    let html = JSON.stringify(gameGoalie);
+    gameListContainerGoalieEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    gameGoalieInputEl[0].value = gameGoalieInputEl[1].value = '';
+}
+
+//async function for creating a game request
+async function gameCreate() {
+    if (gameCreateInputEl[0].value) {
+        let newGame = await fetch(BASE_URL + 'games?currentUserId=' + gameCreateInputEl[0].value, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                sport: gameCreateInputEl[1].value,
+                skill_level: gameCreateInputEl[2].value,
+                city: gameCreateInputEl[3].value,
+                arena: gameCreateInputEl[4].value,
+                request_time: gameCreateInputEl[5].value,
+                request_date: gameCreateInputEl[6].value,
+                team_name: gameCreateInputEl[7].value,
+                description: gameCreateInputEl[8].value
+            })
+        }).then(res => res.json())
+        let html = JSON.stringify(newGame);
+        gameListContainerCreateEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+        gameCreateInputEl[0].value = gameCreateInputEl[1].value = gameCreateInputEl[2].value = gameCreateInputEl[3].value = gameCreateInputEl[4].value
+        gameCreateInputEl[5].value = gameCreateInputEl[6].value = gameCreateInputEl[7].value = gameCreateInputEl[8].value = '';
+    }
+}
+
+//async function to add a goalie to an open game
+async function gameAddGoalieFunc() {
+    if (gameAddGoalieInputEl[0].value) {
+        gameAddGoalie = await fetch(BASE_URL + 'games/' + gameAddGoalieInputEl[0].value + '/add_goalie?currentUserId=' + gameAddGoalieInputEl[1].value, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'}
+        }).then(res => res.json())
+        let html = JSON.stringify(gameAddGoalie);
+        gameListContainerAddGoalieEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+        gameAddGoalieInputEl[0].value = gameAddGoalieInputEl[1].value = '';
+    }
+}
+
+//async function to confirm a game/goalie
+async function gameConfirmFunc() {
+    if (gameConfirmInputEl[0].value) {
+        gameConfirm = await fetch(BASE_URL + 'games/' + gameConfirmInputEl[0].value + '/confirm?currentUserId=' + gameConfirmInputEl[1].value, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'}
+        }).then(res => res.json())
+        let html = JSON.stringify(gameConfirm);
+        gameListContainerConfirmEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+        gameConfirmInputEl[0].value = gameConfirmInputEl[1].value = '';
+    }
+}
+
+//async function for getting all reviews for a user
+// async function reviewGetOne() {
+//     if(reviewShowInputEl[0].value) {
+//         reviewShow = await fetch(BASE_URL + 'users/' + reviewShowInputEl[0].value + '/reviews')
+//         .then(res => res.json());
+//     }
+//     let html = JSON.stringify(reviewShow);
+//     reviewListContainerShowEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+//     reviewShowInputEl[0].value = '';
+// }
+
+//function for deleting an review
+// async function reviewDelete() {
+//     if(reviewDeleteInputEl[0].value) {
+//         reviewD = await fetch(BASE_URL + 'users/reviews/' + reviewDeleteInputEl[0].value, {
+//             method: 'DELETE'
+//         }).then(res => res.json())
+//     }
+//     let html = JSON.stringify(reviewD);
+//     reviewListContainerDeleteEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+//     reviewDeleteInputEl[0].value = '';
+// }
+
+//render function for review section
+function gameRender() {
+    gameAllViewEl.style.display = 
+        gameView === 'view-all' ? 'block' : 'none';
+    gameAllOpenViewEl.style.display =
+        gameView === 'view-all-open' ? 'block' : 'none';
+    gameShowViewEl.style.display = 
+        gameView === 'show' ? 'block' : 'none';
+    gameRequestsViewEl.style.display = 
+        gameView === 'request' ? 'block' : 'none';
+    gameGoalieViewEl.style.display =
+        gameView === 'goalie' ? 'block' : 'none';
+    gameCreateViewEl.style.display = 
+        gameView === 'create' ? 'block' : 'none';
+    gameAddGoalieViewEl.style.display = 
+        gameView === 'add-goalie' ? 'block' : 'none';
+    gameConfirmViewEl.style.display =
+        gameView === 'confirm' ? 'block' : 'none';    
+    // gameDeleteViewEl.style.display = 
+    //     gameView === 'delete' ? 'block' : 'none';
+    if (gameView === 'view-all') {
+        let html = JSON.stringify(gamesAll);
+        gameListContainerAllGamesEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`
+    }
+    if (gameView === 'view-all-open') {
+        let html = JSON.stringify(gamesAllOpen);
+        gameListContainerAllOpenEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`
+    }
+}

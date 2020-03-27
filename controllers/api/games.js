@@ -107,7 +107,7 @@ function add_goalie(req, res) {
             return res.json({response: 'You don\'t play this sport'});
         }
         if (req.user.skill_level !== game.skill_level) {
-            return res.json({response: 'You are not at the same skill level'});
+            return res.json({response: 'You are not at the same skill level that this game requires'});
         }
         game.goalie = req.user;
         game.status = 'pending';

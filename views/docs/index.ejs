@@ -448,100 +448,123 @@
       <a id="game"></a>
       <h2 class="display-5">Game</h2>
       <div class="container-fluid padding p-3 col-12">
-        <p><b>Get - Requestor</b> - How To Make an API Request to Get A List of All Active Game Requests for a User</p>
-        <p><b>Get - Request History</b> - How To Make an API Request to Get a History of Requests for a User</p>
-        <p><b>Get - Goalie History</b> - How To Make an API Request to Get a History of Games Played for a User</p>
-        <p><b>Get - All Active Games</b> - How To Make an API to Get a List of All Active Requests for All Users</p>
-        <p><b>Get - All Games</b> - How to Make an API Request to Get A List of All Games</p>
+        <p><b>Get - All Games</b> - How to Make an API Request to Get a List of All Games in the API</p>
+        <p><b>Get - All Open Games</b> - How To Make an API Request to Get a List of All Open Games That are Awaiting a Goalie to Join</p>
+        <p><b>Show</b> - How To Make an API Request to Show Details of a Single Game</p>
+        <p><b>Get - Requests</b> - How To Make an API to Get a List of All Requests, Open Requests, Pending Requests, or Confirmed Requests for a User</p>
+        <p><b>Get - Goalie</b> - How to Make an API Request to Get A List of All Games Played By a Goalie</p>
         <p><b>Create</b> - How to Make an API Request to Create a Game</p>
-        <p><b>Put</b> - How to Make an API Request to Edit a Game</p>
-        <p><b>Show</b> - How to Make an API Request to See Details of a Game</p>
-        <p><b>Delete</b> - How to Make an API Request to Delete a Game</p>
         <p><b>Put - Add a Goalie</b> - How to Make an API Request to Add a Goalie to a Game</p>
         <p><b>Put - Confirm a Goalie</b> - How to Make an API Request for the Requestor to Confirm a Goalie</p>
+        <p><b>Put</b> - How to Make an API Request to Edit a Game</p>
+        <p><b>Delete</b> - How to Make an API Request to Delete a Game</p>
       </div>
       <div class="container-fluid col-12">
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-request'>GET - REQUESTOR</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-request-history'>GET - REQUEST HISTORY</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-goalie-history'>GET - GOALIE HISTORY</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-all-active'>GET - ALL ACTIVE</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-all-game'>GET - ALL GAMES</button>
-        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-create'>CREATE</button>
-        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-game-edit'>PUT</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-all'>GET - ALL GAMES</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-all-open'>GET - ALL OPEN GAMES</button>
         <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-show'>SHOW</button>
-        <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-game-delete'>DELETE</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-request'>GET - REQUESTS</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-goalie'>GET - GOALIES</button>
+        <button type="button" class="btn btn-outline-success d-inline-block" id='btn-game-create'>CREATE</button>
         <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-game-add-goalie'>PUT - ADD GOALIE</button>
         <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-game-confirm-goalie'>PUT - CONFIRM GOALIE</button>
-        <button type="button" class="btn btn-outline-dark d-inline-block" id='btn-user-hide'>HIDE</button>
+        <button type="button" class="btn btn-outline-secondary d-inline-block" id='btn-game-edit'>PUT</button>
+        <button type="button" class="btn btn-outline-danger d-inline-block" id='btn-game-delete'>DELETE</button>
+        <button type="button" class="btn btn-outline-dark d-inline-block" id='btn-game-hide'>HIDE</button>
       </div>
-      <div class="container-fluid padding p-3" id='arena-display'>
-        <div id='game-request'>
-          <h3 class="display-5">All Active Games for User</h3>
-          <p class="lead">In order to get a a list of active games for a particular user, a <b>GET</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/games/active?currentUserId={user._id}</i>, where {user._id} is the id of the user which you would like to get active requests for.</p>
-          <p class="lead">You can use the below form to enter the user._id to view active requests for a particular user and see the JSON response body:</p>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/active?currentUserId=</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{user._id}">
-          </div>
-          <button type="button" class="btn btn-success"id="btn-request-game">Get Active Games</button>
-          <pre></pre>
-        </div>
-        <div id='game-goalie-history'>
-          <h3 class="display-5">History of Games Played by a User (Goalie)</h3>
-          <p class="lead">In order to get a complete list of games played by a goalie, a <b>GET</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/goalie_history?currentUserId={user._id}, 
-            where {user.id} is the user._id of the user which you want to see the games played history for.
-          </i></p>
-          <p class="lead">You enter the user._id in the form below to see an example of the returned JSON body:</p>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/goalie_history?currentUserId=</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{user._id}">
-          </div>
-          <button type="button" class="btn btn-success"id="btn-goalie-history-game">Get Games Played History</button>
-          <pre></pre>
-        </div>    
-        <div id='game-request-history'>
-          <h3 class="display-5">Request History for a User</h3>
-          <p class="lead">In order to get a complete list of requests for a user, a <b>GET</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/request_history?currentUserId={user._id}, 
-            where {user.id} is the user._id of the user which you want to see the request history for.
-          </i></p>
-          <p class="lead">You enter the user._id in the form below to see an example of the returned JSON body:</p>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/request_history?currentUserId=</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{user._id}">
-          </div>
-          <button type="button" class="btn btn-success"id="btn-request-history-game">Get Request History</button>
-          <pre></pre>
-        </div>
-        <div id='game-all-active'>
-          <h3 class="display-5">All Active Games</h3>
-          <p class="lead">To get a complete list of active games where a goalie hasn't been found, a <b>GET</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/active/all</i></p>
-          <p class="lead">You will get the below JSON response:</p>
-          <pre></pre>
-        </div>
+      <div class="container-fluid padding p-3" id='game-display'>
         <div id='game-all'>
-          <h3 class="display-5">All Games</h3>
-          <p class="lead">To get a complete list of all games in the API database, a <b>GET</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/all</i></p>
-          <p class="lead">You will get the below JSON response:</p>
-          <pre></pre>
+          <h3 class="display-5">List of All Games</h3>
+          <p class="lead">In order to get a a list of all games, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/games/all</i></p>
+          <p class="lead">You can see the JSON body response below for a list of All Games:</p>
+          <pre class='p-3'></pre>
+        </div>
+        <div id='game-all-open'>
+          <h3 class="display-5">List of All Open Games</h3>
+          <p class="lead">In order to see a complete list of games that do not have a goalie as of yet or are open, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/open/all</i></p>
+          <p class="lead">You can see the JSON body response below for the request:</p>
+          <pre class='p-3'></pre>
+        </div>    
+        <div id='game-show'>
+          <h3 class="display-5">Show Details for a Single Game</h3>
+          <p class="lead">In order to see JSON details for a single game, <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}, 
+            where {gameId} is the game._id of the game which you want to see the details for.
+          </i></p>
+          <p class="lead">You enter the game._id in the form below to see an example of the returned JSON body:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{gameId}">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-show-game">GET DETAILS</button>
+          <pre class='p-3'></pre>
+        </div>
+        <div id='game-requests'>
+          <h3 class="display-5">All Requests Made By a User</h3>
+          <p class="lead">To get a complete list of requests made by a user, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/request&currentUserId={userId}&status={gameStatus}</i>
+          . There are two query parameters for this request, the currentUserId query parameter specifies the user that you want to get the requests for
+          . The status query parameter will fetch the games with status = open, pending, or confirmed. To get a list of all requests, set the status to 'all'.</p>
+          <p class="lead">You can fill out the form below to see the response JSON body:</p>
+          <section>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter User Id">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">{gameStatus}</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter 'all' to see all requests, 'open' to show open requests, 'pending' to show pending requests, or 'confirmed' to show closed requests">
+            </div>
+            <button type="button" class="btn btn-success"id="btn-request-game">Get Requests</button>
+          </section>
+          <pre class='p-3'></pre>
+        </div>
+        <div id='game-goalie'>
+          <h3 class="display-5">All Games Played or Requested by a Goalie</h3>
+          <p class="lead">To get a complete list of games played or currently in pending by a goalie, a <b>GET</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/goalie&currentUserId={userId}&status={gameStatus}</i>
+          . There are two query parameters for this request, the currentUserId query parameter specifies the user that you want to get the requests for
+          . The status query parameter will fetch the games with status = pending, or confirmed. To get a list of all requests, set the status to 'all'.</p>
+          <p class="lead">You can fill out the form below to see the response JSON body:</p>
+          <section>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter User Id">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">{gameStatus}</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter 'all' to see all requests, 'pending' to show pending requests, or 'confirmed' to show closed requests">
+            </div>
+            <button type="button" class="btn btn-success"id="btn-goalie-game">Get Requests</button>
+          </section>
+          <pre class='p-3'></pre>
         </div>
         <div id='game-create'>
           <h3 class="display-5">Add a Game</h3>
           <p class="lead">To create a goalie request for a game, a <b>POST</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games</i></p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games?currentUserId={userId}</i>, where the req.query.currentUserId will make up the 
+            req.user and will be the id of the requestor of the game. {userId} is the userId of the requestor. The status key in the game object will be automatically set to 'open'.</p>
           <p class="lead">Use the form below to make a POST request for a new game request, the fields in the below form will make up the req.body.</p>
           <p class="lead">After submitting the form below, you will get the following JSON response below.</p>
           <section>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games?currentUserId=</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{userId} - Enter the User Id of the Requestor">
+            </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">Sport</span>
@@ -592,23 +615,51 @@
             </div>
             <button type="button" class="btn btn-success"id="btn-add-game">Create Game Request</button>
           </section>
-          <pre class="p-3" id='sec-game-create'></pre>
+          <pre class="p-3"></pre>
         </div>
-        <div id='game-show-single'>
-          <h3 class="display-5">Show a Single Game</h3>
-          <p class="lead">In order to get JSON data for a single game, a <b>GET</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}</i>, where the {gameId} is replaced with the game._id of the game/request you wish to get data on.</p>
-          <p class="lead">You can input an game._id in the below example to see the JSON response:</p>
+        <div id='game-add-goalie'>
+          <h3 class="display-5">Add a Goalie to an Open Game</h3>
+          <p class="lead">In order for a goalie to request to join an open game or to add a goalie to an open game in this API, a <b>PUT</b> request is required to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}/add_goalie?currentUserId={userId}</i>, where the {gameId} is replaced with the game._id of the game/request you wish to add a goalie to.</p>
+          <p class="lead">The {userId} is the user Id of the goalie wishing to join or being added to the game. Once a goalie is added, the status of the game will change from 'open' to 'pending'.</p>
+          <p class="lead">You can input a game._id and user._id in the below example to see the JSON response:</p>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/</span>
+              <span class="input-group-text" id="inputGroup-sizing-default">{gameId}</span>
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{gameId}">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the Id of an Open Game you Wish to Add a Goalie To">
           </div>
-          <button type="button" class="btn btn-success"id="btn-get-game">Show Game</button>  
-          <pre class="p-3" id="sec-game-show"></pre>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the User Id of the Goalie">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-add-goalie-game">Add Goalie</button>  
+          <pre class="p-3"></pre>
         </div>
-        <div id='game-edit'>
+        <div id='game-confirm'>
+          <h3 class="display-5">Confirm a Goalie for a Game</h3>
+          <p class="lead">Once a goalie has requested to join a game, the requestor of the game can confirm the goalie for the game by making a <b>PUT</b> request to the following URI:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}/confirm?currentUserId={userId}</i>, where the {gameId} is replaced with the game._id of the game/request you wish to confirm.</p>
+          <p class="lead">The {userId} is the user Id of the requestor who initiall created the request. Once a game has been confirmed, the status of the game will change from 'pending' to 'confirmed'.</p>
+          <p class="lead">You can input a game._id and user._id in the below example to see the JSON response:</p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">{gameId}</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the Id of an Open Game you Wish to Confirm">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the User Id of the Original Requestor">
+          </div>
+          <button type="button" class="btn btn-success"id="btn-confirm-game">Confirm Game</button>  
+          <pre class="p-3"></pre>
+        </div>
+        <!-- <div id='game-edit'>
           <h3 class="display-5">Edit a Game Request</h3>
           <p class="lead">In order to edit a game request for a goalie, a <b>PUT</b> request is required to the following URI:</p>
           <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}</i>, where the {gameId} is replaced with the game._id of the game you wish to edit.</p>
@@ -728,8 +779,8 @@
           </div>
           <button type="button" class="btn btn-success"id="btn-delete-one-game">Confirm a Goalie for the Game</button>  
           <pre class="p-3" id="sec-game-confirm-goalie"></pre>
-        </div>
-      </div>
+        </div> -->
+      </div> 
     </div>
   </div>
 </body>
