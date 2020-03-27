@@ -354,7 +354,7 @@ async function userEdit() {
         if(userEditInputEl[7].value) {
             user.skill_level = userEditInputEl[7].value;
         }
-        userE = await fetch(BASE_URL + 'users/' + userEditInputEl[0].value, {
+        userE = await fetch(BASE_URL + 'users/' + userEditInputEl[0].value + '?currentUserId=' + userEditInputEl[0].value, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(user)
@@ -368,7 +368,7 @@ async function userEdit() {
 //function for deleting a user
 async function userDelete() {
     if(userDeleteInputEl[0]) {
-        userD = await fetch(BASE_URL + 'users/' + userDeleteInputEl[0].value, {
+        userD = await fetch(BASE_URL + 'users/' + userDeleteInputEl[0].value + '?currentUserId=' + userDeleteInputEl[0].value, {
             method: 'DELETE'
         }).then(res => res.json())
     }

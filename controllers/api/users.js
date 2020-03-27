@@ -39,22 +39,40 @@ function create(req, res) {
 
 //update a user
 function update(req, res) {
-    User.findOneAndUpdate(req.params.id, req.body, {new: true}, (err, user) => {
+    User.findById(req.params.id, function(err, user) {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
         }
-        res.json(user);
-    });
+        if (req.user.id != user._id) {
+            return res.json({response: 'You do not have access to edit this user'})
+        }
+        User.findByIdAndUpdate(user, req.body, {new: true}, (err, user) => {
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            res.json(user);
+        });
+    })
 };
 
 //delete a user
 function delete_user(req, res) {
-    User.findOneAndDelete(req.params.id, (err, user) => {
+    User.findById(req.params.id, function(err, user) {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
         }
-        res.json(user);
+        if (req.user.id != user._id) {
+            res.json({response: 'You do not have access to delete this user'})
+        }
+        User.findByIdAndDelete(user, (err, user) => {
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            res.json(user);
+        });
     });
 };
