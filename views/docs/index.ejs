@@ -659,17 +659,24 @@
           <button type="button" class="btn btn-success"id="btn-confirm-game">Confirm Game</button>  
           <pre class="p-3"></pre>
         </div>
-        <!-- <div id='game-edit'>
+        <div id='game-edit'>
           <h3 class="display-5">Edit a Game Request</h3>
           <p class="lead">In order to edit a game request for a goalie, a <b>PUT</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}</i>, where the {gameId} is replaced with the game._id of the game you wish to edit.</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}?currentUserId={userId}</i>, where the {gameId} is replaced with the game._id of the game you wish to edit
+            and the {userId} is the user._id of the requestor who originally made the request.</p>
           <p class="lead">You can input a game._id in the below URI as an example and edit the game data:</p>
           <section>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/</span>
+                <span class="input-group-text" id="inputGroup-sizing-default">{gameId}</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder='{gameId}''>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder='Enter the Game Id You Wish to Edit'>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder='Enter the User Id of the Original Requestor'>
             </div>
             <section>
               <div class="input-group mb-3">
@@ -722,64 +729,29 @@
               </div>
             <button type="button" class="btn btn-success"id="btn-edit-game">Edit Game Request</button>
           </section>
-          <pre class="p-3" id="sec-game-edit"></pre> 
+          <pre class="p-3"></pre> 
         </div>
         <div id='game-delete'>
           <h3 class="display-5">Delete a Game Request</h3>
           <p class="lead">In order to delete a game request from your API, a <b>DELETE</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}</i>, where the {gameId} is replaced with the game._id of the game you wish to delete.</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}?currentUserId={userId}</i>, where the {gameId} is replaced with the game._id of the game you wish to delete
+            and the userId is user._id of the original requestor of the game.</p>
           <p class="lead">You can input a game._id in the below example to see the JSON response, which will be the JSON body of the deleted game:</p>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/games/</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="{gameId}">
-          </div>
-          <button type="button" class="btn btn-danger"id="btn-delete-one-game">Delete Game Request</button>  
-          <pre class="p-3" id="sec-game-delete"></pre>
-        </div>
-        <div id='game-add-goalie'>
-          <h3 class="display-5">Add Goalie to A Game</h3>
-          <p class="lead">In order to add a goalie to a game, a <b>PUT</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}/add_goalie?currentUserId={userId}</i>, where the {gameId} is replaced with the game._id of the game you wish to add a goalie to
-            and the {userId} is the user._id of the goalie that wants to fill the game request. Once a goalie has been added to the game, the status of the game will change from 'active' to 'pending'</p>
-          <p class="lead">You can input a game._id and a user._id in the below example to see the JSON response, which will be the JSON body of the game with the game now having a goalie and a status of 'pending'.</p>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-default">{gameId}</span>
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the Game Id of the Game You Wish to Delete">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the User Id of the Original Requestor of the Game">
           </div>
-          <button type="button" class="btn btn-success"id="btn-delete-one-game">Add a Goalie to the Game Request</button>  
-          <pre class="p-3" id="sec-game-add-goalie"></pre>
+          <button type="button" class="btn btn-danger"id="btn-delete-game">Delete Game Request</button>  
+          <pre class="p-3"></pre>
         </div>
-        <div id='game-confirm-goalie'>
-          <h3 class="display-5">Confirming a Goalie For a Game Request</h3>
-          <p class="lead">Once a goalie has made a request to join a game, the requestor can confirm the game by making a  <b>PUT</b> request to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/games/{gameId}/confirm_goalie?currentUserId={userId}</i>, where the {gameId} is replaced with the game._id of the game (with 'pending' status) 
-            that you want to confirm and the {userId} is the user._id of the requestor of the game. Once a goalie has been confirmed, the status of the game will change from 'pending' to 'confirmed'</p>
-          <p class="lead">You can input a game._id and a user._id in the below example to see the JSON response, which will be the JSON body of the game with the game now have a status of 'confirmed'.</p>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">{gameId}</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-          </div>
-          <button type="button" class="btn btn-success"id="btn-delete-one-game">Confirm a Goalie for the Game</button>  
-          <pre class="p-3" id="sec-game-confirm-goalie"></pre>
-        </div> -->
       </div> 
     </div>
   </div>

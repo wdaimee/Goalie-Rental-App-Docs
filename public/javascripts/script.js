@@ -522,7 +522,7 @@ function reviewRender() {
 
 
 /*-- State Variables --*/
-let gameView, gamesAll, gamesAllOpen, gameShow, gameRequest, gameGoalie, gameAddGoalie, gameConfirm;
+let gameView, gamesAll, gamesAllOpen, gameShow, gameRequest, gameGoalie, gameAddGoalie, gameConfirm, gameEdit, gameDelete;
 
 /*-- Cached Elements --*/
 //cached elements for get/create/show/put/delete sections
@@ -534,7 +534,8 @@ const gameGoalieViewEl = document.getElementById('game-goalie');
 const gameCreateViewEl = document.getElementById('game-create');
 const gameAddGoalieViewEl = document.getElementById('game-add-goalie');
 const gameConfirmViewEl = document.getElementById('game-confirm');
-// const reviewDeleteViewEl = document.getElementById('review-delete');
+const gameEditViewEl = document.getElementById('game-edit');
+const gameDeleteViewEl = document.getElementById('game-delete');
 //cached elements for sections that display JSON
 const gameListContainerAllGamesEl = document.querySelector('#game-all pre');
 const gameListContainerAllOpenEl = document.querySelector('#game-all-open pre');
@@ -544,7 +545,8 @@ const gameListContainerGoalieEl = document.querySelector('#game-goalie pre');
 const gameListContainerCreateEl = document.querySelector('#game-create pre');
 const gameListContainerAddGoalieEl = document.querySelector('#game-add-goalie pre');
 const gameListContainerConfirmEl = document.querySelector('#game-confirm pre');
-// const gameListContainerDeleteEl = document.getElementById('sec-review-delete');
+const gameListContainerEditEl = document.querySelector('#game-edit pre')
+const gameListContainerDeleteEl = document.querySelector('#game-delete pre');
 //cached elements for input elements for adding/editing/querying/etc.
 const gameShowInputEl = document.querySelectorAll('#game-show input');
 const gameRequestInputEl = document.querySelectorAll('#game-requests input');
@@ -552,7 +554,8 @@ const gameGoalieInputEl = document.querySelectorAll('#game-goalie input');
 const gameCreateInputEl = document.querySelectorAll('#game-create input');
 const gameAddGoalieInputEl = document.querySelectorAll('#game-add-goalie input');
 const gameConfirmInputEl = document.querySelectorAll('#game-confirm input');
-// const reviewDeleteInputEl = document.querySelectorAll('#review-delete input');
+const gameEditInputEl = document.querySelectorAll('#game-edit input');
+const gameDeleteInputEl = document.querySelectorAll('#game-delete input');
 
 /*-- Event Listeners --*/
 
@@ -630,24 +633,31 @@ document.getElementById('btn-game-confirm-goalie')
     gameRender();
 });
 
+//when the confirm game button is pressed inside the form
 document.getElementById('btn-confirm-game')
-.addEventListener('click', gameConfirmFunc)
+.addEventListener('click', gameConfirmFunc);
 
+//when the PUT button is pressed to show the EDIT form
+document.getElementById('btn-game-edit')
+.addEventListener('click', function() {
+    gameView = "edit";
+    gameRender();
+});
 
-//when the get review button inside the show view is pressed
-// document.getElementById('btn-get-review')
-// .addEventListener('click', reviewGetOne);
+//when the Edit Game Request Button is pressed within the EDIT form
+document.getElementById('btn-edit-game')
+.addEventListener('click', gameEditFunc);
 
-//when the DELETE button is pressed to show the DELETE form
-// document.getElementById('btn-review-delete')
-// .addEventListener('click', function() {
-//     reviewView = 'delete'
-//     reviewRender();
-// });
+//when the delete button to view the delete form is pressed
+document.getElementById('btn-game-delete')
+.addEventListener('click', function() {
+    gameView = "delete",
+    gameRender();
+});
 
-//when the DELETE REVIEW button is pressed inside the DELETE form
-// document.getElementById('btn-delete-one-review')
-// .addEventListener('click', reviewDelete);
+//when the delete game button is pressed in the delete game form
+document.getElementById('btn-delete-game')
+.addEventListener('click', gameDeleteFunc);
 
 /*-- Functions --*/
 
@@ -758,28 +768,56 @@ async function gameConfirmFunc() {
     }
 }
 
-//async function for getting all reviews for a user
-// async function reviewGetOne() {
-//     if(reviewShowInputEl[0].value) {
-//         reviewShow = await fetch(BASE_URL + 'users/' + reviewShowInputEl[0].value + '/reviews')
-//         .then(res => res.json());
-//     }
-//     let html = JSON.stringify(reviewShow);
-//     reviewListContainerShowEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
-//     reviewShowInputEl[0].value = '';
-// }
+async function gameEditFunc() {
+    if(gameEditInputEl[0].value) {
+        let game = {};
+        if(gameEditInputEl[2].value) {
+            game.sport = gameEditInputEl[2].value;
+        }
+        if(gameEditInputEl[3].value) {
+            game.skill_level = gameEditInputEl[2].value;
+        }
+        if(gameEditInputEl[4].value) {
+            game.city = gameEditInputEl[4].value;
+        }
+        if(gameEditInputEl[5].value) {
+            game.arena = gameEditInputEl[5].value;
+        }
+        if(gameEditInputEl[6].value){
+            game.request_time = gameEditInputEl[6].value;
+        }
+        if(gameEditInputEl[7].value) {
+            game.request_date = gameEditInputEl[7].value;
+        }
+        if(gameEditInputEl[8].value) {
+            game.team_name = gameEditInputEl[8].value;
+        }
+        if(gameEditInputEl[9].value) {
+            game.description = gameEditInputEl[9].value;
+        }
+        gameEdit = await fetch(BASE_URL + 'games/' + gameEditInputEl[0].value + '?currentUserId=' + gameEditInputEl[1].value, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(game)
+        }).then(res => res.json())
+    }
+    let html = JSON.stringify(gameEdit);
+    gameListContainerEditEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    gameEditInputEl[0] = gameEditInputEl[1] = gameEditInputEl[2] = gameEditInputEl[3] = gameEditInputEl[4] =
+    gameEditInputEl[5] = gameEditInputEl[6] = gameEditInputEl[7] = gameEditInputEl[8] = gameEditInputEl[9] = '';
+}
 
 //function for deleting an review
-// async function reviewDelete() {
-//     if(reviewDeleteInputEl[0].value) {
-//         reviewD = await fetch(BASE_URL + 'users/reviews/' + reviewDeleteInputEl[0].value, {
-//             method: 'DELETE'
-//         }).then(res => res.json())
-//     }
-//     let html = JSON.stringify(reviewD);
-//     reviewListContainerDeleteEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
-//     reviewDeleteInputEl[0].value = '';
-// }
+async function gameDeleteFunc() {
+    if(gameDeleteInputEl[0].value) {
+        gameDelete = await fetch(BASE_URL + 'games/' + gameDeleteInputEl[0].value + '?currentUserId=' + gameDeleteInputEl[1].value, {
+            method: 'DELETE'
+        }).then(res => res.json())
+    }
+    let html = JSON.stringify(gameDelete);
+    gameListContainerDeleteEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
+    gameDeleteInputEl[0].value = gameDeleteInputEl[0].value = '';
+}
 
 //render function for review section
 function gameRender() {
@@ -798,9 +836,11 @@ function gameRender() {
     gameAddGoalieViewEl.style.display = 
         gameView === 'add-goalie' ? 'block' : 'none';
     gameConfirmViewEl.style.display =
-        gameView === 'confirm' ? 'block' : 'none';    
-    // gameDeleteViewEl.style.display = 
-    //     gameView === 'delete' ? 'block' : 'none';
+        gameView === 'confirm' ? 'block' : 'none'; 
+    gameEditViewEl.style.display = 
+        gameView === 'edit' ? 'block' : 'none';   
+    gameDeleteViewEl.style.display = 
+        gameView === 'delete' ? 'block' : 'none';
     if (gameView === 'view-all') {
         let html = JSON.stringify(gamesAll);
         gameListContainerAllGamesEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`
