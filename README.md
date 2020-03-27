@@ -16,9 +16,13 @@ gÜber Goalie Rental App will be a full stack application which allows users to 
 
 - Node.js
 - Express.js
+- MongoDB
+- Mongoose
+- Mongoose Atlas DB
 - JavaScript
 - HTML (docs page)
 - BootStrap4 (docs page)
+- Deployed with Heroku
 
 ### List of Technologies Used for the Front End:
 - TBD
