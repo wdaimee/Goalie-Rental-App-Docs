@@ -26,10 +26,10 @@ function index(req, res) {
 function create(req, res) {
     const new_review = new Review({
         content: req.body.content,
-        rating: req.body.rating
+        rating: req.body.rating,
+        review_by: req.user,
+        user_reviewed: req.params.id
     }); 
-    new_review.review_by = req.body.review_by;
-    new_review.user_reviewed = req.body.user_reviewed;
     new_review.save((err, review) => {
         Review.findOne(review)
         .populate('review_by') 
@@ -46,15 +46,24 @@ function create(req, res) {
 
 //delete a user review
 function delete_review(req, res) {
-    Review.findOneAndDelete(req.params.id)
-    .populate('review_by')
-    .populate('user_reviewed')
-    .exec((err, review) => {
-        console.log(review);
+    Review.findById(req.params.id, function(err, review) {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
         }
-        res.json(review)
+        if (req.user.id != review.review_by._id) {
+            return res.json({response: 'You are not authorized to delete this review'});
+        }
+        Review.findByIdAndDelete(review)
+        .populate('review_by')
+        .populate('user_reviewed')
+        .exec((err, review) => {
+            console.log(review);
+            if (err) {
+                console.log("error: " + err);
+                res.sendStatus(500);
+            }
+            res.json(review)
+        });
     });
 };

@@ -378,14 +378,15 @@
         <div id='review-create'>
           <h3 class="display-5">Add a Review for a User</h3>
           <p class="lead">To create or add a review for a particular user, a <b>POST</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/users/{userId}/reviews,</i>where the userId is the user._id of the user being reviewed</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/users/{userId}/reviews?currentUserId={userId_reviewer},</i>where the userId is the user._id of the user being reviewed
+          and {userId_reivewer} is the user._id of the reviewer.</p>
           <p class="lead">Use the form below to make a POST request for a user review, you will need a user._id of a user to review and the user._id of the user who is creating the review.</p>
           <p class="lead">The fields in the form below will make up the req.body of the POST request.</p>
           <p class="lead">After submitting the form below, you will get the following JSON response below.</p>
           <section>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Reviewed By</span>
+                <span class="input-group-text" id="inputGroup-sizing-default">ID of User Creating the Review</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="user._id of reviewer">
             </div>
@@ -428,13 +429,20 @@
         <div id='review-delete'>
           <h3 class="display-5">Delete a Review</h3>
           <p class="lead">In order to delete a particular review for a user, a <b>DELETE</b> request is required to the following URI:</p>
-          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/users/reviews/{reviewId}</i>, where the {reviewId} is replaced with the review._id of the review you wish to delete.</p>
-          <p class="lead">You can input a review._id in the below example to see the JSON response, which will be the JSON body of the deleted review:</p>
+          <p class="lead"><i>https://goalie-rental-app.herokuapp.com/api/users/reviews/{reviewId}?currentUserId={userId}</i>, where the {reviewId} is replaced with the review._id of the review you wish to delete
+            and the {userId} is the user._id of the reviewer.</p>
+          <p class="lead">You can input a review._id and the corresponding user._id in the below example to see the JSON response, which will be the JSON body of the deleted review:</p>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">https://goalie-rental-app.herokuapp.com/api/users/reviews/</span>
+              <span class="input-group-text" id="inputGroup-sizing-default">{reviewId}</span>
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the ID of Review You Wish to Delete">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">{userId}</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Enter the ID of User Who Made The Review">
           </div>
           <button type="button" class="btn btn-danger"id="btn-delete-one-review">Delete Review</button>  
           <pre class="p-3" id="sec-review-delete"></pre>

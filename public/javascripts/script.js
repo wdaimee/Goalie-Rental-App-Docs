@@ -1,5 +1,5 @@
 //base url to heroku api
-const BASE_URL = 'https://goalie-rental-app.herokuapp.com/api/';
+const BASE_URL = 'http://localhost:3000/api/';
 
 /*-- Below Code for Arena Section --*/
 /*-- Constants --*/
@@ -468,12 +468,10 @@ async function reviewInit() {
 //async function for adding a review
 async function addReview() {
     if(reviewCreateInputEls[1].value) {
-        let newReview = await fetch(BASE_URL + 'users/' + reviewCreateInputEls[1] + '/reviews', {
+        let newReview = await fetch(BASE_URL + 'users/' + reviewCreateInputEls[1].value + '/reviews?currentUserId=' + reviewCreateInputEls[0].value, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                review_by: reviewCreateInputEls[0].value,
-                user_reviewed: reviewCreateInputEls[1].value,
                 content: reviewCreateInputEls[2].value,
                 rating: reviewCreateInputEls[3].value
             })
@@ -498,13 +496,13 @@ async function reviewGetOne() {
 //function for deleting an review
 async function reviewDelete() {
     if(reviewDeleteInputEl[0].value) {
-        reviewD = await fetch(BASE_URL + 'users/reviews/' + reviewDeleteInputEl[0].value, {
+        reviewD = await fetch(BASE_URL + 'users/reviews/' + reviewDeleteInputEl[0].value + '?currentUserId=' + reviewDeleteInputEl[1].value, {
             method: 'DELETE'
         }).then(res => res.json())
     }
     let html = JSON.stringify(reviewD);
     reviewListContainerDeleteEl.innerHTML = `<div>${html.split(',').join(', <br />')}</div>`;
-    reviewDeleteInputEl[0].value = '';
+    reviewDeleteInputEl[0].value = reviewDeleteInputEl[1] = '';
 }
 
 //render function for review section
