@@ -1,6 +1,6 @@
 //base url to heroku api
-// const BASE_URL = 'https://goalie-rental-app.herokuapp.com/api/';
-const BASE_URL = 'http://localhost:3000/api/'
+const BASE_URL = 'https://goalie-rental-app.herokuapp.com/api/';
+
 
 /*-- Below Code for Arena Section --*/
 /*-- Constants --*/
