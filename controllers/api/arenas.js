@@ -54,7 +54,8 @@ function update(req, res) {
 
 //delete an arena
 function delete_arena(req, res) {
-    Arena.findOneAndDelete(req.params.id, (err, arena) => {
+    console.log(req.params)
+    Arena.findByIdAndDelete(req.params.id, (err, arena) => {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
