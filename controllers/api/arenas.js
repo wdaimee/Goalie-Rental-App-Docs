@@ -43,7 +43,7 @@ function create(req, res) {
 
 //update an arena
 function update(req, res) {
-    Arena.findOneAndUpdate(req.params.id, req.body, {new: true}, (err, arena) => {
+    Arena.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, arena) => {
         if (err) {
             console.log("error: " + err);
             res.sendStatus(500);
