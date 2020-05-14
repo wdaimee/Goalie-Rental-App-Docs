@@ -1,5 +1,5 @@
 //base url to heroku api
-const BASE_URL = process.env.B_URL;
+const BASE_URL = 'https://goalie-rental-app.herokuapp.com/api/';
 
 /*-- Below Code for Arena Section --*/
 /*-- Constants --*/
